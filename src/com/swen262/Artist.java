@@ -16,10 +16,7 @@ public class Artist {
     }
 
     public Artist(String name, String type){
-        this.GUID = UUID.fromString(name).toString();
-        this.name = name;
-        this.type = type;
-        this.rating = 0;
+        this(name, type, 0);
     }
 
     public String getGUID(){

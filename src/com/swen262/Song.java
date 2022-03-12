@@ -18,11 +18,7 @@ public class Song {
     }
 
     public Song(String title, Artist artist, int duration){
-        this.GUID = UUID.fromString((title+artist.toString())).toString();
-        this.title = title;
-        this.artist = artist;
-        this.duration = duration;
-        this.rating = 0;
+        this(title, artist, duration, 0);
     }
 
     public String getTitle(){

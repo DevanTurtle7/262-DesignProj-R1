@@ -24,13 +24,8 @@ public class Release {
     }
 
     public Release(String title, Artist artist, String medium, LinkedList<Song> tracks){
-        this.issueDate = new Date();
-        this.title = title;
-        this.artist = artist;
-        this.medium = medium;
-        this.tracks = tracks;
-        this.rating = calculateRating();
-        this.GUID = UUID.fromString(title+artist.toString()+tracks.toString()).toString();
+        this(new Date(), title, artist, medium, tracks);
+        
     }
 
     private int calculateRating(){

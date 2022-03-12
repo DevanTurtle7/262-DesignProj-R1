@@ -1,19 +1,19 @@
 package com.swen262;
 
+import java.util.HashSet;
 import java.util.LinkedList;
 
 public class PersonalLibrary {
     private LinkedList<Song> songs;
     private LinkedList<Release> releases;
 
-    public PersonalLibrary(){
-        this.songs = new LinkedList<>();
-        this.releases = new LinkedList<>();
-    }
-
     public PersonalLibrary(LinkedList<Song> songs, LinkedList<Release> releases){
         this.songs = songs;
         this.releases = releases;
+    }
+
+    public PersonalLibrary(){
+        this(new LinkedList<>(), new LinkedList<>());
     }
 
     public LinkedList<Song> getSongs(){
@@ -24,21 +24,14 @@ public class PersonalLibrary {
         return this.releases;
     }
 
-    public LinkedList<Artist> getArtists(){
-        LinkedList<Artist> artists = new LinkedList<>();
-        Artist artist;
+    public HashSet<Artist> getArtists(){
+        HashSet<Artist> artists = new HashSet<>();
         for (Song song : songs) {
-            artist = song.getArtist();
-            if(!artists.contains(artist)){
-                artists.add(artist);
-            }
+            artists.add(song.getArtist());
         }
         for (Release release : releases) {
             for (Song song : release.getTracks()) {
-                artist = song.getArtist();
-                if(!artists.contains(artist)){
-                    artists.add(artist);
-                }
+                artists.add(song.getArtist());
             }
         }
         return artists;
