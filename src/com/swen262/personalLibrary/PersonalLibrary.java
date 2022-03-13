@@ -20,6 +20,12 @@ public class PersonalLibrary {
         this(new LinkedList<>(), new LinkedList<>());
     }
 
+    public static PersonalLibrary loadPersonalLibrary() {
+        // TODO: Load a personal library if it exists. otherwise create a new one
+
+        return new PersonalLibrary();
+    }
+
     public LinkedList<Song> getSongs(){
         return this.songs;
     }
