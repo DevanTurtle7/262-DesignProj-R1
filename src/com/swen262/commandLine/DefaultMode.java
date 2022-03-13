@@ -12,18 +12,25 @@ public class DefaultMode extends Mode {
                 "==========================",
                 "         COMMANDS         ",
                 "==========================",
-                "search [cat] [attr]",
+                "searchlib [cat] [attr]",
                 "   Searches your personal library.",
                 "   [cat]: The type of object you're searching for (artist, song, release).",
                 "   [attr]: The attribute you're searching by (name, type, title, duration, rating, artist).",
-                "add [guid]",
+                "searchdb [cat] [attr]",
+                "   Searches the database",
+                "   [cat]: The type of object you're searching for (artist, song, release).",
+                "   [attr]: The attribute you're searching by (name, type, title, duration, rating, artist).",
+                "add [guid] <date>",
                 "   Adds to your personal library.",
                 "   [guid]: The GUID of a song or release you want to add.",
+                "   <date>: (OPTIONAL) The date the song or release was acquired. Defaults to the current time.",
                 "remove [guid]",
                 "   Removes from your personal library.",
                 "   [guid]: The GUID of a song or release you want to remove.",
+                "browse",
+                "   Enters into browsing mode. Displays your personal library.",
                 "quit",
-                "   Exits the program."
+                "   Exits the program.",
         };
 
         for (String line : message) {
