@@ -1,5 +1,5 @@
 .idea/
 *.xml
 .*/
-src/Databasemain.*
+src/com/swen262/Databasemain.*
 randomfilename
