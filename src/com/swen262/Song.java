@@ -1,7 +1,5 @@
 package com.swen262;
 
-import java.util.UUID;
-
 public class Song {
     private String title;
     private Artist artist;
