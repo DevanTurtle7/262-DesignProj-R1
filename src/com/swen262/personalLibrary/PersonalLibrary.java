@@ -1,4 +1,8 @@
-package com.swen262;
+package com.swen262.personalLibrary;
+
+import com.swen262.Artist;
+import com.swen262.Release;
+import com.swen262.Song;
 
 import java.util.HashSet;
 import java.util.LinkedList;

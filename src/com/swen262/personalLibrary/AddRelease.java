@@ -1,9 +1,11 @@
-package com.swen262;
+package com.swen262.personalLibrary;
 
-public class RemoveRelease implements Action{
+import com.swen262.Release;
+
+public class AddRelease implements Action{
     private PersonalLibrary library;
 
-    public RemoveRelease(PersonalLibrary library){
+    public AddRelease(PersonalLibrary library){
         this.library = library;
     }
 
@@ -11,7 +13,7 @@ public class RemoveRelease implements Action{
     public void performAction(Object o) {
         if(o instanceof Release){
             Release newRelease = (Release) o;
-            library.removeRelease(newRelease);
+            library.addRelease(newRelease);
         }
     }
 }
