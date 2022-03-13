@@ -59,11 +59,17 @@ public class CommandLineInterface {
         running = false;
     }
 
+    protected void setMode(Mode newMode) {
+        this.currentMode = newMode;
+    }
+
     public void run() {
         Scanner scanner = new Scanner(System.in);
         String input = " ";
 
         while (running) {
+            System.out.print(">> ");
+
             input = scanner.nextLine();
             input = input.strip();
             input = input.toLowerCase();

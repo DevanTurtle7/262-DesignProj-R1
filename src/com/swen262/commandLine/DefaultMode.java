@@ -8,6 +8,7 @@ public class DefaultMode extends Mode {
 
     @Override
     protected void listCommands() {
+        CommandLineInterface commandLineInterface = this.getCommandLineInterface();
         String[] message = {
                 "==========================",
                 "         COMMANDS         ",
@@ -34,7 +35,7 @@ public class DefaultMode extends Mode {
         };
 
         for (String line : message) {
-            System.out.println(line);
+            commandLineInterface.outputMessage(line);
         }
     }
 
@@ -44,18 +45,22 @@ public class DefaultMode extends Mode {
         String command = args[0];
         CommandLineInterface commandLineInterface = this.getCommandLineInterface();
 
-        if (command.equals("search")) {
+        if (command.equals("searchlib")) {
+
+        } else if (command.equals("searchdb")) {
 
         } else if (command.equals("add")) {
 
         } else if (command.equals("remove")) {
 
+        } else if (command.equals("browse")) {
+            commandLineInterface.setMode(new ChoosingArtist(commandLineInterface));
         } else if (command.equals("quit")) {
             commandLineInterface.quit();
         } else if (command.equals("help")) {
             listCommands();
         } else {
-            System.out.println("Unknown command. Use the 'help' command to list all commands.");
+            commandLineInterface.outputMessage("Unknown command. Use the 'help' command to list all commands.");
         }
     }
 }
