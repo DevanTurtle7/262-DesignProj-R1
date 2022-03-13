@@ -16,6 +16,8 @@ public class CommandLineInterface {
 
     private Mode currentMode;
 
+    private boolean running;
+
     public CommandLineInterface() {
         library = PersonalLibrary.loadPersonalLibrary();
 
@@ -25,6 +27,8 @@ public class CommandLineInterface {
         removeReleaseAction = new RemoveRelease(library);
 
         currentMode = new DefaultMode(this);
+
+        running = true;
     }
 
     protected void addSong(Song song) {
@@ -51,13 +55,19 @@ public class CommandLineInterface {
         currentMode.handleInput(input);
     }
 
+    protected void quit() {
+        running = false;
+    }
+
     public void run() {
         Scanner scanner = new Scanner(System.in);
         String input = " ";
 
-        while (!input.equals("")) {
+        while (running) {
             input = scanner.nextLine();
             input = input.strip();
+            input = input.toLowerCase();
+
             handleInput(input);
         }
     }
