@@ -47,6 +47,10 @@ public class CommandLineInterface {
         removeReleaseAction.performAction(release);
     }
 
+    protected PersonalLibrary getPersonalLibrary() {
+        return library;
+    }
+
     protected void outputMessage(String message) {
         System.out.println(message);
     }

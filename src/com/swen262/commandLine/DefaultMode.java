@@ -60,7 +60,7 @@ public class DefaultMode extends Mode {
         } else if (command.equals("help")) {
             listCommands();
         } else {
-            commandLineInterface.outputMessage("Unknown command. Use the 'help' command to list all commands.");
+            this.unknownCommand();
         }
     }
 }
