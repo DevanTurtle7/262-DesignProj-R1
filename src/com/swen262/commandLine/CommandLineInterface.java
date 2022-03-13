@@ -4,6 +4,8 @@ import com.swen262.Release;
 import com.swen262.Song;
 import com.swen262.personalLibrary.*;
 
+import java.util.Scanner;
+
 public class CommandLineInterface {
 
     private Action addSongAction;
@@ -11,6 +13,8 @@ public class CommandLineInterface {
     private Action addReleaseAction;
     private Action removeReleaseAction;
     private PersonalLibrary library;
+
+    private Mode currentMode;
 
     public CommandLineInterface() {
         library = PersonalLibrary.loadPersonalLibrary();
@@ -37,7 +41,22 @@ public class CommandLineInterface {
         removeReleaseAction.performAction(release);
     }
 
-    public void run() {
+    protected void outputMessage(String message) {
+        System.out.println(message);
+    }
 
+    private void handleInput(String input) {
+        currentMode.handleInput(input);
+    }
+
+    public void run() {
+        Scanner scanner = new Scanner(System.in);
+        String input = " ";
+
+        while (!input.equals("")) {
+            input = scanner.nextLine();
+            input = input.strip();
+            handleInput(input);
+        }
     }
 }
