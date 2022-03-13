@@ -90,10 +90,16 @@ public class Database {
         String artist_guid = release_attributes[1];
         Artist artist = searchArtistByGUID(artist_guid);
         String title = release_attributes[2];
-        String issue_date = release_attributes[3];
+        String issue_date = release_attributes[4];
+        String medium = release_attributes[3];
+        if (issue_date.matches("^\\d\\d\\d\\d$")){
+            issue_date += "-01-01";
+        }
+        if (issue_date.matches("^\\d\\d\\d\\d-\\d\\d$")){
+            issue_date += "-01";
+        }
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-mm-dd");
         Date iss_date;
-        String medium = release_attributes[4];
         LinkedHashSet<Song> tracks = new LinkedHashSet<>();
         String track;
         for (int i = 5; i < length ; i++) {
@@ -101,9 +107,11 @@ public class Database {
             tracks.add(searchSongByGUID(track));
         }
         try{
+            System.out.println(issue_date);
             iss_date = formatter.parse(issue_date);
             return new Release(iss_date,title,artist,medium,tracks,release_guid);
         } catch (ParseException e){
+            System.out.println("ohno error");
             e.getMessage();
         }
         return null;
