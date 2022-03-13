@@ -7,6 +7,10 @@ public abstract class Mode {
         this.commandLineInterface = commandLineInterface;
     }
 
+    protected CommandLineInterface getCommandLineInterface() {
+        return commandLineInterface;
+    }
+
     protected abstract void listCommands();
     protected abstract void handleInput(String input);
 }

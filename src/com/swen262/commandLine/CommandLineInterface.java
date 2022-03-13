@@ -23,6 +23,8 @@ public class CommandLineInterface {
         removeSongAction = new RemoveSong(library);
         addReleaseAction = new AddRelease(library);
         removeReleaseAction = new RemoveRelease(library);
+
+        currentMode = new DefaultMode(this);
     }
 
     protected void addSong(Song song) {
