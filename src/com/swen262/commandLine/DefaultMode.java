@@ -33,8 +33,8 @@ public class DefaultMode extends Mode {
 
     @Override
     protected void handleInput(String input) {
-        String[] tokens = input.split(" ");
-        String command = tokens[0];
+        String[] args = input.split(" ");
+        String command = args[0];
         CommandLineInterface commandLineInterface = this.getCommandLineInterface();
 
         if (command.equals("search")) {
