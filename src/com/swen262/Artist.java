@@ -1,22 +1,20 @@
 package com.swen262;
 
-import java.util.UUID;
-
 public class Artist {
     private String GUID;
     private String name;
     private String type;
     private int rating;
 
-    public Artist(String name, String type, int rating){
-        this.GUID = UUID.fromString(name).toString();
+    public Artist(String name, String type, int rating, String GUID){
+        this.GUID = GUID;
         this.name = name;
         this.type = type;
         this.rating = rating;
     }
 
-    public Artist(String name, String type){
-        this(name, type, 0);
+    public Artist(String GUID, String name, String type){
+        this(name, type, 0, GUID);
     }
 
     public String getGUID(){
@@ -31,7 +29,7 @@ public class Artist {
         return this.type;
     }
 
-    public int getrating(){
+    public int getRating(){
         return this.rating;
     }
 

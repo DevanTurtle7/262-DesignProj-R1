@@ -9,16 +9,16 @@ public class Song {
     private int rating;
     private String GUID;
 
-    public Song(String title, Artist artist, int duration, int rating){
-        this.GUID = UUID.fromString((title+artist.toString())).toString();
+    public Song(String title, Artist artist, int duration, int rating, String GUID){
+        this.GUID = GUID;
         this.title = title;
         this.artist = artist;
         this.duration = duration;
         this.rating = rating;
     }
 
-    public Song(String title, Artist artist, int duration){
-        this(title, artist, duration, 0);
+    public Song(String title, Artist artist, int duration, String GUID){
+        this(title, artist, duration, 0, GUID);
     }
 
     public String getTitle(){
@@ -41,7 +41,7 @@ public class Song {
         return this.GUID;
     }
 
-    public void Rate(int rate){
+    public void rate(int rate){
         if(rate <= 5 && rate >= 1){
             this.rating = rate;
         }else{

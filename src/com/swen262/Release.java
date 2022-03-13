@@ -2,7 +2,6 @@ package com.swen262;
 
 import java.util.Date;
 import java.util.LinkedList;
-import java.util.UUID;
 
 public class Release {
     private Date issueDate;
@@ -13,18 +12,18 @@ public class Release {
     private String medium;
     private LinkedList<Song> tracks;
 
-    public Release(Date issueDate, String title, Artist artist, String medium, LinkedList<Song> tracks){
+    public Release(Date issueDate, String title, Artist artist, String medium, LinkedList<Song> tracks, String GUID){
         this.issueDate = issueDate;
         this.title = title;
         this.artist = artist;
         this.medium = medium;
         this.tracks = tracks;
         this.rating = calculateRating();
-        this.GUID = UUID.fromString(title+artist.toString()+tracks.toString()).toString();
+        this.GUID = GUID;
     }
 
-    public Release(String title, Artist artist, String medium, LinkedList<Song> tracks){
-        this(new Date(), title, artist, medium, tracks);
+    public Release(String title, Artist artist, String medium, LinkedList<Song> tracks, String GUID){
+        this(new Date(), title, artist, medium, tracks, GUID);
         
     }
 
