@@ -19,10 +19,8 @@ public class CommandLineInterface {
     private boolean running;
 
     public CommandLineInterface() {
-        library = PersonalLibrary.loadPersonalLibrary();
-
-        addByGUIDAction = new AddByGUID(library);
-        removeByGUIDAction = new RemoveByGUID(library);
+        addByGUIDAction = new AddByGUID();
+        removeByGUIDAction = new RemoveByGUID();
 
         currentMode = new DefaultMode(this);
 
@@ -35,10 +33,6 @@ public class CommandLineInterface {
 
     protected void removeByGUID(String GUID) throws Exception {
         removeByGUIDAction.performAction(GUID);
-    }
-
-    protected PersonalLibrary getPersonalLibrary() {
-        return library;
     }
 
     protected void outputMessage(String message) {

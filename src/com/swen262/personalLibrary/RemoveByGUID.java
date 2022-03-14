@@ -8,14 +8,10 @@ import com.swen262.database.Database;
 import java.util.LinkedList;
 
 public class RemoveByGUID implements Action{
-    private PersonalLibrary library;
-
-    public RemoveByGUID(PersonalLibrary library){
-        this.library = library;
-    }
-
     @Override
     public void performAction(Object o){
+        PersonalLibrary library = PersonalLibrary.getActiveInstance();
+
         if(o instanceof String){
             String GUID = (String) o;
             LinkedList<Song> songs = library.getSongs();

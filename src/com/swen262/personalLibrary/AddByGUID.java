@@ -7,14 +7,10 @@ import com.swen262.database.Database;
 import com.swen262.exceptions.GUIDNotFoundException;
 
 public class AddByGUID implements Action{
-    private PersonalLibrary library;
-
-    public AddByGUID(PersonalLibrary library){
-        this.library = library;
-    }
-
     @Override
     public void performAction(Object o) throws Exception {
+        PersonalLibrary library = PersonalLibrary.getActiveInstance();
+
         if(o instanceof String){
             String GUID = (String) o;
             Database db = Database.getActiveInstance();

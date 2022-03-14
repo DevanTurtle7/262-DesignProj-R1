@@ -5,8 +5,12 @@ import com.swen262.personalLibrary.PersonalLibrary;
 
 public class DefaultMode extends Mode {
 
+    private PersonalLibrary library;
+
     public DefaultMode(CommandLineInterface commandLineInterface) {
         super(commandLineInterface);
+
+        library = PersonalLibrary.getActiveInstance();
     }
 
     @Override
@@ -47,7 +51,6 @@ public class DefaultMode extends Mode {
         String[] args = input.split(" ");
         String command = args[0];
         CommandLineInterface commandLineInterface = this.getCommandLineInterface();
-        PersonalLibrary library = commandLineInterface.getPersonalLibrary();
 
         if (command.equals("searchlib")) {
 
