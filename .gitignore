@@ -2,5 +2,5 @@
 *.xml
 .*/
 src/com/swen262/DatabaseMain.*
-csvfiles/
 out/
+bin/
