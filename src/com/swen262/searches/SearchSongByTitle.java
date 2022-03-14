@@ -9,8 +9,13 @@ public class SearchSongByTitle implements SongSearcher<Song>{
 
     @Override
     public LinkedList<Song> algorithm(String query, Database db) {
-        // TODO Auto-generated method stub
-        return null;
+        LinkedList<Song> returnSongs = new LinkedList<>();
+        for(Song song : db.getSongs()){
+            if(song.getTitle().toLowerCase().contains(query.toLowerCase())){
+                returnSongs.add(song);
+            }
+        }
+        return returnSongs;
     }
     
 }

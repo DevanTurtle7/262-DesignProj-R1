@@ -5,14 +5,14 @@ import java.util.LinkedList;
 import com.swen262.Database;
 import com.swen262.Release;
 
-public class SearchReleaseByTitle implements SongSearcher{
+public class SearchReleaseByTitle implements SongSearcher<Release>{
 
     @Override
-    public LinkedList<String> algorithm(String query, Database db) {
-        LinkedList<String> returnReleases = new LinkedList<>();
+    public LinkedList<Release> algorithm(String query, Database db) {
+        LinkedList<Release> returnReleases = new LinkedList<>();
         for(Release release : db.getReleases()){
             if(release.getTitle().contains(query)){
-                returnReleases.add(release.getGUID());
+                returnReleases.add(release);
             }
         }
         return returnReleases;
