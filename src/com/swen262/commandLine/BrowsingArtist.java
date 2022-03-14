@@ -6,7 +6,7 @@ import com.swen262.Song;
 import com.swen262.personalLibrary.PersonalLibrary;
 
 import java.util.HashSet;
-import java.util.LinkedList;
+import java.util.Locale;
 
 public class BrowsingArtist extends Mode {
     private PersonalLibrary library;
@@ -127,11 +127,59 @@ public class BrowsingArtist extends Mode {
 
     @Override
     protected void listCommands() {
+        CommandLineInterface commandLineInterface = this.getCommandLineInterface();
+        String[] message = {
+                "==========================",
+                "         COMMANDS         ",
+                "==========================",
+                "Enter release name to browse it's songs",
+                "ls",
+                "   Lists the songs and releases in your library.",
+                "esc",
+                "   Exits browsing mode.",
+                "quit",
+                "   Exits the program.",
+        };
 
+        for (String line : message) {
+            commandLineInterface.outputMessage(line);
+        }
     }
 
     @Override
     protected void handleInput(String input) {
+        String[] args = input.split(" ");
+        String command = args[0];
+        CommandLineInterface commandLineInterface = this.getCommandLineInterface();
 
+        if (command.equals("ls")) {
+            listContent();
+        } else if (command.equals("help")) {
+            listCommands();
+        } else if (command.equals("esc")) {
+            commandLineInterface.setMode(new DefaultMode(commandLineInterface));
+        } else if (command.equals("quit")) {
+            commandLineInterface.quit();
+        } else {
+            // TODO: go to release
+            Release found = null;
+            input = input.toLowerCase();
+
+            for (Release release : releases) {
+                if (found == null) {
+                    String current = release.getTitle().toLowerCase();
+
+                    if (input.equals(current)) {
+                        found = release;
+                    }
+                }
+            }
+
+            if (found != null) {
+                commandLineInterface.setMode(new BrowsingRelease(commandLineInterface, found));
+            } else {
+                this.unknownCommand();
+            }
+        }
     }
 }
