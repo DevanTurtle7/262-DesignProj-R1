@@ -80,7 +80,7 @@ public class BrowsingArtist extends Mode {
 
         commandLineInterface.outputMessage(title);
         commandLineInterface.outputMessage("\tDuration: " + duration);
-        commandLineInterface.outputMessage("Rating: " + rating + " / 5 stars");
+        commandLineInterface.outputMessage("\tRating: " + rating + " / 5 stars");
     }
 
     private void outputRelease(Release release) {
@@ -157,7 +157,7 @@ public class BrowsingArtist extends Mode {
         } else if (command.equals("help")) {
             listCommands();
         } else if (command.equals("esc")) {
-            commandLineInterface.setMode(new DefaultMode(commandLineInterface));
+            commandLineInterface.setMode(new ChoosingArtist(commandLineInterface));
         } else if (command.equals("quit")) {
             commandLineInterface.quit();
         } else {
