@@ -1,5 +1,7 @@
 package com.swen262.commandLine;
 
+import com.swen262.personalLibrary.AddSong;
+import com.swen262.personalLibrary.AddSongByGUID;
 import com.swen262.personalLibrary.PersonalLibrary;
 
 public class DefaultMode extends Mode {
@@ -53,9 +55,16 @@ public class DefaultMode extends Mode {
         } else if (command.equals("searchdb")) {
 
         } else if (command.equals("add")) {
-            library.addSongByGUID(args[1]);
-        } else if (command.equals("remove")) {
+            // TODO: ADD DATE
+            if (args.length < 2) {
+                this.unknownCommand();
+            } else {
+                String GUID = args[1];
+                AddSongByGUID addSong = new AddSongByGUID(library);
 
+                addSong.performAction(GUID);
+            }
+        } else if (command.equals("remove")) {
         } else if (command.equals("browse")) {
             commandLineInterface.setMode(new ChoosingArtist(commandLineInterface));
         } else if (command.equals("quit")) {

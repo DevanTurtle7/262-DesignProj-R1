@@ -67,6 +67,14 @@ public class PersonalLibrary {
         }
     }
 
+    public void removeSongByGUID(String GUID) {
+        for (Song song : songs) {
+            if (song.getGUID().equals(GUID)) {
+                songs.remove(song);
+            }
+        }
+    }
+
     public void addRelease(Release release){
         if(!releases.contains(release)){
             releases.add(release);
