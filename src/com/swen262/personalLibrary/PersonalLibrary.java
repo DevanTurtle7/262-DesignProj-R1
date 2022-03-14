@@ -6,6 +6,7 @@ import com.swen262.Release;
 import com.swen262.Song;
 import com.swen262.database.Database;
 
+import javax.xml.crypto.Data;
 import java.util.HashSet;
 import java.util.LinkedList;
 
@@ -24,7 +25,7 @@ public class PersonalLibrary {
     public static PersonalLibrary getActiveInstance() {
         if (activeInstance == null) {
             // TODO: Load a personal library if it exists. otherwise create a new one
-            
+
             return new PersonalLibrary();
         } else {
             return activeInstance;
@@ -85,4 +86,39 @@ public class PersonalLibrary {
     }
 
     public int getReleaseCount() {return releases.size();}
+
+    public HashSet<Song> getSongsFromArtist(Artist artist) {
+        HashSet<Song> songsFromArtist = new HashSet<>();
+        Database database = Database.getActiveInstance();
+
+        for (Song song : songs) {
+            if (song.getArtist() == artist) {
+                if (database.isASingle(song)) {
+                    songsFromArtist.add(song);
+                }
+            }
+        }
+
+        return songsFromArtist;
+    }
+
+    public HashSet<Release> getReleasesFromArtist(Artist artist) {
+        HashSet<Release> releasesFromArtist = new HashSet<>();
+        Database database = Database.getActiveInstance();
+
+        for (Song song : songs) {
+            if (song.getArtist() == artist) {
+                if (!database.isASingle(song)) {
+                    Release release = database.getSongRelease(song);
+                    releasesFromArtist.add(release);
+                }
+            }
+        }
+
+        for (Release release : releases) {
+            releasesFromArtist.add(release);
+        }
+
+        return releasesFromArtist;
+    }
 }

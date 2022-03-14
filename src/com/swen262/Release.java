@@ -62,4 +62,14 @@ public class Release {
     public LinkedHashSet<Song> getTracks(){
         return this.tracks;
     }
+
+    public int getDuration() {
+        int duration = 0;
+
+        for (Song songs : tracks) {
+            duration += songs.getDuration();
+        }
+
+        return duration;
+    }
 }

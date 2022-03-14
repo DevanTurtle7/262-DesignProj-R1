@@ -187,4 +187,8 @@ public class Database {
     public Release getSongRelease(Song song) {
         return songsToRelease.get(song);
     }
+
+    public boolean isASingle(Song song) {
+        return songsToRelease.get(song) == null;
+    }
 }
