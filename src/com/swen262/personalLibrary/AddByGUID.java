@@ -17,7 +17,7 @@ public class AddByGUID implements Action{
     public void performAction(Object o) throws Exception {
         if(o instanceof String){
             String GUID = (String) o;
-            Database db = Main.getDB();
+            Database db = Database.getActiveInstance();
             Song song = db.searchSongByGUID(GUID);
 
             if (song == null) {

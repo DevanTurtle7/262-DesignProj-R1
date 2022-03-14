@@ -7,6 +7,7 @@ import com.opencsv.RFC4180ParserBuilder;
 import com.swen262.Artist;
 import com.swen262.Release;
 import com.swen262.Song;
+import jdk.jfr.DataAmount;
 
 import java.io.FileReader;
 import java.text.ParseException;
@@ -30,7 +31,11 @@ public class Database {
     private final String ARTISTS_CSV_PATH = getClass().getResource("./data/artists.csv").getPath();
     private final String RELEASES_CSV_PATH = getClass().getResource("./data/releases.csv").getPath();
 
+    private static Database activeInstance;
+
     public Database(){
+        activeInstance = this;
+
         artists = new LinkedHashSet<>();
         releases = new LinkedHashSet<>();
         songs = new LinkedHashSet<>();
@@ -38,6 +43,14 @@ public class Database {
         songsToRelease = new HashMap<>();
         System.out.println("Initializing the market's finest music database!");
         CSVParser();
+    }
+
+    public static Database getActiveInstance() {
+        if (activeInstance == null) {
+            return new Database();
+        } else {
+            return activeInstance;
+        }
     }
 
     public LinkedHashSet<Artist> getArtists(){
