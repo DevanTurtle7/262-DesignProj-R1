@@ -1,6 +1,5 @@
 package com.swen262.commandLine;
 
-import com.swen262.personalLibrary.AddSong;
 import com.swen262.personalLibrary.AddSongByGUID;
 import com.swen262.personalLibrary.PersonalLibrary;
 
@@ -59,10 +58,16 @@ public class DefaultMode extends Mode {
             if (args.length < 2) {
                 this.unknownCommand();
             } else {
-                String GUID = args[1];
-                AddSongByGUID addSong = new AddSongByGUID(library);
+                try {
+                    String GUID = args[1];
+                    AddSongByGUID addSong = new AddSongByGUID(library);
 
-                addSong.performAction(GUID);
+                    addSong.performAction(GUID);
+                    int numSongs = library.getSongCount();
+                    commandLineInterface.outputMessage("Successfully added song. Library now has " + numSongs + " songs.");
+                } catch (Exception e) {
+                    commandLineInterface.outputMessage("Error adding song");
+                }
             }
         } else if (command.equals("remove")) {
         } else if (command.equals("browse")) {

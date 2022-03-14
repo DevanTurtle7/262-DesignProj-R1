@@ -28,11 +28,11 @@ public class PersonalLibrary {
         return new PersonalLibrary();
     }
 
-    public LinkedList<Song> getSongs(){
+    protected LinkedList<Song> getSongs(){
         return this.songs;
     }
 
-    public LinkedList<Release> getReleases(){
+    protected LinkedList<Release> getReleases(){
         return this.releases;
     }
 
@@ -49,41 +49,31 @@ public class PersonalLibrary {
         return artists;
     }
 
-    public void addSong(Song song){
+    protected void addSong(Song song){
         if(!songs.contains(song)){
             songs.add(song);
         }
     }
 
-    public void addSongByGUID(String GUID) {
-        Database database = Main.getDB();
-        Song song = database.searchSongByGUID(GUID);
-        addSong(song);
-    }
-
-    public void removeSong(Song song){
+    protected void removeSong(Song song){
         if(songs.contains(song)){
             songs.remove(song);
         }
     }
 
-    public void removeSongByGUID(String GUID) {
-        for (Song song : songs) {
-            if (song.getGUID().equals(GUID)) {
-                songs.remove(song);
-            }
-        }
-    }
-
-    public void addRelease(Release release){
+    protected void addRelease(Release release){
         if(!releases.contains(release)){
             releases.add(release);
         }
     }
 
-    public void removeRelease(Release release){
+    protected void removeRelease(Release release){
         if(releases.contains(release)){
             releases.remove(release);
         }
+    }
+
+    public int getSongCount() {
+        return songs.size();
     }
 }
