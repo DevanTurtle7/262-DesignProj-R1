@@ -5,7 +5,7 @@ import java.util.LinkedList;
 import com.swen262.Artist;
 import com.swen262.database.Database;
 
-public class SearchArtistByName implements SongSearcher<Artist>{
+public class SearchArtistByName implements DBSongSearcher<Artist>{
 
     @Override
     public LinkedList<Artist> algorithm(String query) {

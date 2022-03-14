@@ -6,7 +6,7 @@ import java.util.LinkedList;
 import com.swen262.database.Database;
 import com.swen262.Song;
 
-public class SearchSongByDuration implements SongSearcher<Song>{
+public class SearchSongByDuration implements DBSongSearcher<Song>{
 
     class InvalidInput extends Exception{
         public InvalidInput(String message){
