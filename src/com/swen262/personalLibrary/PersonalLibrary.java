@@ -1,4 +1,8 @@
-package com.swen262;
+package com.swen262.personalLibrary;
+
+import com.swen262.Artist;
+import com.swen262.Release;
+import com.swen262.Song;
 
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -14,6 +18,12 @@ public class PersonalLibrary {
 
     public PersonalLibrary(){
         this(new LinkedList<>(), new LinkedList<>());
+    }
+
+    public static PersonalLibrary loadPersonalLibrary() {
+        // TODO: Load a personal library if it exists. otherwise create a new one
+
+        return new PersonalLibrary();
     }
 
     public LinkedList<Song> getSongs(){

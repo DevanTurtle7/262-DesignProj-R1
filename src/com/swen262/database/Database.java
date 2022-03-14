@@ -1,12 +1,16 @@
-package com.swen262;
+package com.swen262.database;
 
 import com.opencsv.CSVReader;
 import com.opencsv.CSVReaderBuilder;
 import com.opencsv.RFC4180Parser;
 import com.opencsv.RFC4180ParserBuilder;
+import com.swen262.Artist;
+import com.swen262.Release;
+import com.swen262.Song;
 
 import java.io.FileReader;
 import java.io.StringReader;
+import java.net.URL;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -22,13 +26,17 @@ public class Database {
     private LinkedHashSet<Release> releases;
     private LinkedHashSet<Artist> artists;
 
-    public Database(String song_csv, String release_csv, String artist_csv){
+    private final String SONG_CSV_PATH = getClass().getResource("./data/songs.csv").getPath();
+    private final String ARTISTS_CSV_PATH = getClass().getResource("./data/artists.csv").getPath();
+    private final String RELEASES_CSV_PATH = getClass().getResource("./data/releases.csv").getPath();
+
+    public Database(){
         artists = new LinkedHashSet<>();
         releases = new LinkedHashSet<>();
         songs = new LinkedHashSet<>();
 
         System.out.println("Initializing the market's finest music database!");
-        CSVParser(song_csv,release_csv,artist_csv);
+        CSVParser();
     }
 
     public LinkedHashSet<Artist> getArtists(){
@@ -43,11 +51,11 @@ public class Database {
         return songs;
     }
 
-    private void CSVParser(String song_csv, String release_csv, String artist_csv){
+    private void CSVParser(){
         try {
             RFC4180Parser rfcParse = new RFC4180ParserBuilder().withQuoteChar('\'').build();
             RFC4180Parser rfcDoubleParse = new RFC4180ParserBuilder().withQuoteChar('\"').build();
-            CSVReader artist_csv_reader = new CSVReaderBuilder(new FileReader(artist_csv)).withCSVParser(rfcParse).build();
+            CSVReader artist_csv_reader = new CSVReaderBuilder(new FileReader(ARTISTS_CSV_PATH)).withCSVParser(rfcParse).build();
             String[] artist_csv_record;
 
             while ((artist_csv_record = artist_csv_reader.readNext()) != null){
@@ -55,21 +63,22 @@ public class Database {
                 artists.add(curArtist);
             }
             // songs need to come l8r
-            CSVReader song_csv_reader =  new CSVReaderBuilder(new FileReader(song_csv)).withCSVParser(rfcDoubleParse).build();
+            CSVReader song_csv_reader =  new CSVReaderBuilder(new FileReader(SONG_CSV_PATH)).withCSVParser(rfcDoubleParse).build();
             String[] song_csv_record;
             while ((song_csv_record = song_csv_reader.readNext()) != null){
                 Song curSong = songParser(song_csv_record);
                 songs.add(curSong);
             }
 
-            CSVReader release_csv_reader = new CSVReaderBuilder(new FileReader(release_csv)).withCSVParser(rfcDoubleParse).build();
+            CSVReader release_csv_reader = new CSVReaderBuilder(new FileReader(RELEASES_CSV_PATH)).withCSVParser(rfcDoubleParse).build();
             String[] release_csv_record;
             while ((release_csv_record = release_csv_reader.readNext()) != null){
                 Release curRelease = releaseParser(release_csv_record);
                 releases.add(curRelease);
             }
-
+            System.out.println("Successfully initialized database with " + songs.size() + " songs, " + releases.size() + " releases and " + artists.size() + " artists.");
         } catch (Exception e) {
+            System.out.println("something went wrong");
             e.printStackTrace();
             e.getMessage();
         }

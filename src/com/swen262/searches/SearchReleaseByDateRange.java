@@ -5,7 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.LinkedList;
 
-import com.swen262.Database;
+import com.swen262.database.Database;
 import com.swen262.Release;
 
 public class SearchReleaseByDateRange implements SongSearcher<Release>{

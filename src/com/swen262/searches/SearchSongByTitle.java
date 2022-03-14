@@ -2,7 +2,7 @@ package com.swen262.searches;
 
 import java.util.LinkedList;
 
-import com.swen262.Database;
+import com.swen262.database.Database;
 import com.swen262.Song;
 
 public class SearchSongByTitle implements SongSearcher<Song>{

@@ -1,4 +1,6 @@
-package com.swen262;
+package com.swen262.personalLibrary;
+
+import com.swen262.Song;
 
 public class AddSong implements Action{
     private PersonalLibrary library;
