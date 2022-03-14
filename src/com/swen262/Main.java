@@ -5,17 +5,29 @@ import org.apache.commons.cli.*;
 import java.util.Date;
 import java.util.LinkedHashSet;
 
+import com.swen262.searches.SearchArtistByName;
+import com.swen262.searches.SearchReleaseByArtistName;
+import com.swen262.searches.SearchSongByArtist;
+import com.swen262.searches.SongSearcher;
+
 public class Main {
 
     private static Database db;
-    private static String song_path;
-    private static String release_path;
-    private static String artist_path;
+    private static String song_path = "csvfiles/songs.csv";
+    private static String release_path = "csvfiles/releases.csv";
+    private static String artist_path = "csvfiles/artists.csv";
 
 
     public static void main(String[] args) {
-        commandLineParser(args);
         db = new Database(song_path,release_path,artist_path);
+        SongSearcher<Artist> artistStrat = new SearchArtistByName();
+        System.out.println(artistStrat.algorithm("The Heavy", db).toString());
+        SongSearcher<Release> releaseStrat = new SearchReleaseByArtistName();
+        System.out.println("\n"+releaseStrat.algorithm("muse", db).get(0).getArtist());
+        SongSearcher<Song> songStrat = new SearchSongByArtist();
+        System.out.println("\n"+songStrat.algorithm("muse", db));
+
+        
 	// write your code here
     }
 
