@@ -28,11 +28,11 @@ public class PersonalLibrary {
         return new PersonalLibrary();
     }
 
-    protected LinkedList<Song> getSongs(){
+    public LinkedList<Song> getSongs(){
         return this.songs;
     }
 
-    protected LinkedList<Release> getReleases(){
+    public LinkedList<Release> getReleases(){
         return this.releases;
     }
 

@@ -3,12 +3,26 @@ package com.swen262.commandLine;
 import com.swen262.Artist;
 import com.swen262.personalLibrary.PersonalLibrary;
 
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Locale;
 
 public class ChoosingArtist extends Mode {
 
+    private HashMap<String, Artist> artistLibrary;
+
     public ChoosingArtist(CommandLineInterface commandLineInterface) {
         super(commandLineInterface);
+
+        artistLibrary = new HashMap<>();
+        PersonalLibrary library = commandLineInterface.getPersonalLibrary();
+        HashSet<Artist> artists = library.getArtists();
+
+        for (Artist artist : artists) {
+            String lowercaseName = artist.getName().toLowerCase();
+            artistLibrary.put(lowercaseName, artist);
+        }
+
         printArtists();
     }
 
@@ -29,10 +43,10 @@ public class ChoosingArtist extends Mode {
             }
 
             for (Artist artist : artists) {
-                commandLineInterface.outputMessage(artist.toString());
+                commandLineInterface.outputMessage(artist.getName());
             }
 
-            commandLineInterface.outputMessage("Enter artists name to browse or esc to exit...");
+            commandLineInterface.outputMessage("\nEnter artists name to browse or esc to exit...");
         } else {
             commandLineInterface.outputMessage("There are no artists in your library.");
         }
@@ -53,6 +67,10 @@ public class ChoosingArtist extends Mode {
                 "quit",
                 "   Exits the program.",
         };
+
+        for (String line : message) {
+            commandLineInterface.outputMessage(line);
+        }
     }
 
     @Override
@@ -60,6 +78,7 @@ public class ChoosingArtist extends Mode {
         String[] args = input.split(" ");
         String command = args[0];
         CommandLineInterface commandLineInterface = this.getCommandLineInterface();
+        PersonalLibrary library = commandLineInterface.getPersonalLibrary();
 
         if (command.equals("ls")) {
             printArtists();
@@ -70,8 +89,14 @@ public class ChoosingArtist extends Mode {
         } else if (command.equals("help")) {
             listCommands();
         } else {
-            // TODO: GET ARTIST
-            this.unknownCommand();
+            String artistName = input.toLowerCase();
+
+            if (artistLibrary.containsKey(artistName)) {
+                Artist artist = artistLibrary.get(artistName);
+                commandLineInterface.setMode(new BrowsingArtist(commandLineInterface, artist));
+            } else {
+                this.unknownCommand();
+            }
         }
     }
 }
