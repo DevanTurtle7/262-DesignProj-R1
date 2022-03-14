@@ -1,4 +1,4 @@
-package com.swen262.searches;
+package com.swen262.DBSearches;
 
 import java.util.LinkedList;
 

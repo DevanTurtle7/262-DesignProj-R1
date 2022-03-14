@@ -1,4 +1,4 @@
-package com.swen262.searches;
+package com.swen262.DBSearches;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
