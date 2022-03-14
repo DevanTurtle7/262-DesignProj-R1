@@ -13,9 +13,20 @@ public class PersonalLibrary {
     private LinkedList<Song> songs;
     private LinkedList<Release> releases;
 
+    private PersonalLibrary activeInstance;
+
     public PersonalLibrary(LinkedList<Song> songs, LinkedList<Release> releases){
+        activeInstance = this;
         this.songs = songs;
         this.releases = releases;
+    }
+
+    public PersonalLibrary getActiveInstance() {
+        if (activeInstance == null) {
+            return new PersonalLibrary();
+        } else {
+            return activeInstance;
+        }
     }
 
     public PersonalLibrary(){
