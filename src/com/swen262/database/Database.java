@@ -35,6 +35,7 @@ public class Database {
         releases = new LinkedHashSet<>();
         songs = new LinkedHashSet<>();
 
+        songsToRelease = new HashMap<>();
         System.out.println("Initializing the market's finest music database!");
         CSVParser();
     }

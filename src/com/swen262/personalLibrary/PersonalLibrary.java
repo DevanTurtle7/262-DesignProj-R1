@@ -76,4 +76,6 @@ public class PersonalLibrary {
     public int getSongCount() {
         return songs.size();
     }
+
+    public int getReleaseCount() {return releases.size();}
 }

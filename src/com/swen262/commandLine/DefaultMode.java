@@ -1,8 +1,8 @@
 package com.swen262.commandLine;
 
-import com.swen262.personalLibrary.AddSongByGUID;
+import com.swen262.personalLibrary.AddByGUID;
 import com.swen262.personalLibrary.PersonalLibrary;
-import com.swen262.personalLibrary.RemoveSongByGUID;
+import com.swen262.personalLibrary.RemoveByGUID;
 
 public class DefaultMode extends Mode {
 
@@ -61,11 +61,12 @@ public class DefaultMode extends Mode {
             } else {
                 try {
                     String GUID = args[1];
-                    AddSongByGUID addSong = new AddSongByGUID(library);
+                    AddByGUID addSong = new AddByGUID(library);
 
                     addSong.performAction(GUID);
                     int numSongs = library.getSongCount();
-                    commandLineInterface.outputMessage("Successfully added song. Library now has " + numSongs + " songs.");
+                    int numReleases = library.getReleaseCount();
+                    commandLineInterface.outputMessage("Successfully added. Library now has " + numSongs + " songs and " + numReleases + " releases.");
                 } catch (Exception e) {
                     commandLineInterface.outputMessage("Error adding song");
                 }
@@ -73,11 +74,12 @@ public class DefaultMode extends Mode {
         } else if (command.equals("remove")) {
             try {
                 String GUID = args[1];
-                RemoveSongByGUID removeSong = new RemoveSongByGUID(library);
+                RemoveByGUID removeSong = new RemoveByGUID(library);
 
                 removeSong.performAction(GUID);
                 int numSongs = library.getSongCount();
-                commandLineInterface.outputMessage("Successfully removed song. Library now has " + numSongs + " songs.");
+                int numReleases = library.getReleaseCount();
+                commandLineInterface.outputMessage("Successfully removed. Library now has " + numSongs + " songs and " + numReleases + " releases.");
             } catch (Exception e) {
                 commandLineInterface.outputMessage("Error removing song");
             }

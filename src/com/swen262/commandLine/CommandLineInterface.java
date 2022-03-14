@@ -1,17 +1,17 @@
 package com.swen262.commandLine;
 
-import com.swen262.Release;
 import com.swen262.Song;
-import com.swen262.personalLibrary.*;
+import com.swen262.personalLibrary.Action;
+import com.swen262.personalLibrary.AddByGUID;
+import com.swen262.personalLibrary.PersonalLibrary;
+import com.swen262.personalLibrary.RemoveByGUID;
 
 import java.util.Scanner;
 
 public class CommandLineInterface {
 
-    private Action addSongAction;
-    private Action removeSongAction;
-    private Action addReleaseAction;
-    private Action removeReleaseAction;
+    private Action addByGUIDAction;
+    private Action removeByGUIDAction;
     private PersonalLibrary library;
 
     private Mode currentMode;
@@ -21,30 +21,20 @@ public class CommandLineInterface {
     public CommandLineInterface() {
         library = PersonalLibrary.loadPersonalLibrary();
 
-        addSongAction = new AddSong(library);
-        removeSongAction = new RemoveSong(library);
-        addReleaseAction = new AddRelease(library);
-        removeReleaseAction = new RemoveRelease(library);
+        addByGUIDAction = new AddByGUID(library);
+        removeByGUIDAction = new RemoveByGUID(library);
 
         currentMode = new DefaultMode(this);
 
         running = true;
     }
 
-    protected void addSong(Song song) {
-        addSongAction.performAction(song);
+    protected void addByGUID(Song song) throws Exception {
+        addByGUIDAction.performAction(song);
     }
 
-    protected void removeSong(Song song) {
-        removeSongAction.performAction(song);
-    }
-
-    protected void addRelease(Release release) {
-        addReleaseAction.performAction(release);
-    }
-
-    protected void removeRelease(Release release) {
-        removeReleaseAction.performAction(release);
+    protected void removeByGUID(Song song) throws Exception {
+        removeByGUIDAction.performAction(song);
     }
 
     protected PersonalLibrary getPersonalLibrary() {
