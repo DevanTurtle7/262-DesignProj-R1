@@ -2,6 +2,7 @@ package com.swen262.commandLine;
 
 import com.swen262.personalLibrary.AddSongByGUID;
 import com.swen262.personalLibrary.PersonalLibrary;
+import com.swen262.personalLibrary.RemoveSongByGUID;
 
 public class DefaultMode extends Mode {
 
@@ -70,6 +71,16 @@ public class DefaultMode extends Mode {
                 }
             }
         } else if (command.equals("remove")) {
+            try {
+                String GUID = args[1];
+                RemoveSongByGUID removeSong = new RemoveSongByGUID(library);
+
+                removeSong.performAction(GUID);
+                int numSongs = library.getSongCount();
+                commandLineInterface.outputMessage("Successfully removed song. Library now has " + numSongs + " songs.");
+            } catch (Exception e) {
+                commandLineInterface.outputMessage("Error removing song");
+            }
         } else if (command.equals("browse")) {
             commandLineInterface.setMode(new ChoosingArtist(commandLineInterface));
         } else if (command.equals("quit")) {
