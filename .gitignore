@@ -1,2 +1,6 @@
-out
-.idea
+.idea/
+*.xml
+.*/
+src/com/swen262/DatabaseMain.*
+out/
+bin/
