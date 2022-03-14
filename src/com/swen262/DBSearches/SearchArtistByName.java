@@ -8,9 +8,9 @@ import com.swen262.database.Database;
 public class SearchArtistByName implements SongSearcher<Artist>{
 
     @Override
-    public LinkedList<Artist> algorithm(String query, Database db) {
+    public LinkedList<Artist> algorithm(String query) {
         LinkedList<Artist> returnArtists = new LinkedList<>();
-        for(Artist artist : db.getArtists()){
+        for(Artist artist : Database.getActiveInstance().getArtists()){
             if(artist.getName().toLowerCase().contains(query.toLowerCase())){
                 returnArtists.add(artist);
             }

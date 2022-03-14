@@ -11,7 +11,7 @@ import com.swen262.Release;
 public class SearchReleaseByDateRange implements SongSearcher<Release>{
 
     @Override
-    public LinkedList<Release> algorithm(String query, Database db) {
+    public LinkedList<Release> algorithm(String query) {
         LinkedList<Release> returnReleases = new LinkedList<>();
         String[] dates = query.split("-");
         SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
@@ -19,7 +19,7 @@ public class SearchReleaseByDateRange implements SongSearcher<Release>{
             try{
                 Date beginDate = formatter.parse(dates[0]);
                 Date endDate = formatter.parse(dates[1]);
-                for(Release release : db.getReleases()){
+                for(Release release : Database.getActiveInstance().getReleases()){
                     if(release.getIssueDate().before(endDate) && release.getIssueDate().after(beginDate)){
                         returnReleases.add(release);
                     }

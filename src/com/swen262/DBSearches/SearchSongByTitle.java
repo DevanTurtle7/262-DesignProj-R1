@@ -8,9 +8,9 @@ import com.swen262.Song;
 public class SearchSongByTitle implements SongSearcher<Song>{
 
     @Override
-    public LinkedList<Song> algorithm(String query, Database db) {
+    public LinkedList<Song> algorithm(String query) {
         LinkedList<Song> returnSongs = new LinkedList<>();
-        for(Song song : db.getSongs()){
+        for(Song song : Database.getActiveInstance().getSongs()){
             if(song.getTitle().toLowerCase().contains(query.toLowerCase())){
                 returnSongs.add(song);
             }

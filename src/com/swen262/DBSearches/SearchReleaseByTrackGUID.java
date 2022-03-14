@@ -9,9 +9,9 @@ import com.swen262.Song;
 public class SearchReleaseByTrackGUID implements SongSearcher<Release> {
 
     @Override
-    public LinkedList<Release> algorithm(String query, Database db) {
+    public LinkedList<Release> algorithm(String query) {
         LinkedList<Release> returnReleases = new LinkedList<>();
-        for(Release release : db.getReleases()){
+        for(Release release : Database.getActiveInstance().getReleases()){
             for(Song song : release.getTracks()){
                 if(song.getGUID().equals(query)){
                     returnReleases.add(release);

@@ -1,5 +1,6 @@
 package com.swen262.DBSearches;
 
+import java.util.LinkedHashSet;
 import java.util.LinkedList;
 
 import com.swen262.database.Database;
@@ -14,21 +15,22 @@ public class SearchSongByDuration implements SongSearcher<Song>{
     }
 
     @Override
-    public LinkedList<Song> algorithm(String query, Database db) {
+    public LinkedList<Song> algorithm(String query) {
         String[] tokens = query.split(" ");
         LinkedList<Song> returnSongs = new LinkedList<>();
         try{
             String shorterOrLonger = tokens[0].toLowerCase();
             int duration = Integer.parseInt(tokens[1]);
+            LinkedHashSet<Song> songs = Database.getActiveInstance().getSongs();
             if(shorterOrLonger.equals("s")){
-                for(Song song : db.getSongs()){
+                for(Song song : songs){
                     if(song.getDuration() < duration){
                         returnSongs.add(song);
                     }
                 }
             }
             else if(shorterOrLonger.equals("l")){
-                for(Song song : db.getSongs()){
+                for(Song song : songs){
                     if(song.getDuration() > duration){
                         returnSongs.add(song);
                     }
