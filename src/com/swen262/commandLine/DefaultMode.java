@@ -1,8 +1,7 @@
 package com.swen262.commandLine;
 
-import com.swen262.personalLibrary.AddByGUID;
+import com.swen262.exceptions.GUIDNotFoundException;
 import com.swen262.personalLibrary.PersonalLibrary;
-import com.swen262.personalLibrary.RemoveByGUID;
 
 public class DefaultMode extends Mode {
 
@@ -61,27 +60,27 @@ public class DefaultMode extends Mode {
             } else {
                 try {
                     String GUID = args[1];
-                    AddByGUID addSong = new AddByGUID(library);
+                    commandLineInterface.addByGUID(GUID);
 
-                    addSong.performAction(GUID);
                     int numSongs = library.getSongCount();
                     int numReleases = library.getReleaseCount();
                     commandLineInterface.outputMessage("Successfully added. Library now has " + numSongs + " songs and " + numReleases + " releases.");
+                } catch (GUIDNotFoundException e) {
+                    commandLineInterface.outputMessage("Error adding to library. Could not find song or release with matching GUID.");
                 } catch (Exception e) {
-                    commandLineInterface.outputMessage("Error adding song");
+                    commandLineInterface.outputMessage("Something went wrong.");
                 }
             }
         } else if (command.equals("remove")) {
             try {
                 String GUID = args[1];
-                RemoveByGUID removeSong = new RemoveByGUID(library);
+                commandLineInterface.removeByGUID(GUID);
 
-                removeSong.performAction(GUID);
                 int numSongs = library.getSongCount();
                 int numReleases = library.getReleaseCount();
                 commandLineInterface.outputMessage("Successfully removed. Library now has " + numSongs + " songs and " + numReleases + " releases.");
             } catch (Exception e) {
-                commandLineInterface.outputMessage("Error removing song");
+                commandLineInterface.outputMessage("Something went wrong.");
             }
         } else if (command.equals("browse")) {
             commandLineInterface.setMode(new ChoosingArtist(commandLineInterface));
