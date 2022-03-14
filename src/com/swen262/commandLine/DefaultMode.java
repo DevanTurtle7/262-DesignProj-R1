@@ -1,5 +1,7 @@
 package com.swen262.commandLine;
 
+import com.swen262.personalLibrary.PersonalLibrary;
+
 public class DefaultMode extends Mode {
 
     public DefaultMode(CommandLineInterface commandLineInterface) {
@@ -44,13 +46,14 @@ public class DefaultMode extends Mode {
         String[] args = input.split(" ");
         String command = args[0];
         CommandLineInterface commandLineInterface = this.getCommandLineInterface();
+        PersonalLibrary library = commandLineInterface.getPersonalLibrary();
 
         if (command.equals("searchlib")) {
 
         } else if (command.equals("searchdb")) {
 
         } else if (command.equals("add")) {
-
+            library.addSongByGUID(args[1]);
         } else if (command.equals("remove")) {
 
         } else if (command.equals("browse")) {

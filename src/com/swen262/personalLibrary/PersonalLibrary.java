@@ -1,8 +1,10 @@
 package com.swen262.personalLibrary;
 
 import com.swen262.Artist;
+import com.swen262.Main;
 import com.swen262.Release;
 import com.swen262.Song;
+import com.swen262.database.Database;
 
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -51,6 +53,12 @@ public class PersonalLibrary {
         if(!songs.contains(song)){
             songs.add(song);
         }
+    }
+
+    public void addSongByGUID(String GUID) {
+        Database database = Main.getDB();
+        Song song = database.searchSongByGUID(GUID);
+        addSong(song);
     }
 
     public void removeSong(Song song){
