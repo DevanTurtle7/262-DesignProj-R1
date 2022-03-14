@@ -18,6 +18,8 @@ public class BrowsingArtist extends Mode {
     private final int MS_IN_MINUTE = 60000;
     private final int MS_IN_SECOND = 1000;
 
+    private final int NUM_SPACES = 5;
+
     public BrowsingArtist(CommandLineInterface commandLineInterface, Artist artist) {
         super(commandLineInterface);
 
@@ -41,13 +43,33 @@ public class BrowsingArtist extends Mode {
         remainingMS -= seconds * MS_IN_SECOND;
         int milliseconds = remainingMS;
 
-        String duration = minutes + "m" + seconds + "s" + milliseconds + "ms";
+        String duration = minutes + "m " + seconds + "s " + milliseconds + "ms";
 
         if (hours > 0) {
-            duration = hours + "h" + duration;
+            duration = hours + "h " + duration;
         }
 
         return duration;
+    }
+
+    private void outputArtistName() {
+        CommandLineInterface commandLineInterface = this.getCommandLineInterface();
+        String name = artist.getName();
+        int nameLength = name.length();
+        String bar = "";
+        String spaces = "";
+
+        for (int i = 0; i < (NUM_SPACES * 2) + nameLength; i++) {
+            bar += "=";
+        }
+
+        for (int i = 0; i < NUM_SPACES; i++) {
+            spaces += " ";
+        }
+
+        commandLineInterface.outputMessage(bar);
+        commandLineInterface.outputMessage(spaces + name + spaces);
+        commandLineInterface.outputMessage(bar);
     }
 
     private void outputSong(Song song) {
@@ -56,11 +78,12 @@ public class BrowsingArtist extends Mode {
         String duration = formatDuration(song.getDuration());
         String rating = song.getRating() + "";
 
-        commandLineInterface.outputMessage(title + " " + duration + " " + rating);
+        commandLineInterface.outputMessage(title);
+        commandLineInterface.outputMessage("\tDuration: " + duration);
+        commandLineInterface.outputMessage("Rating: " + rating + " / 5 stars");
     }
 
     private void outputRelease(Release release) {
-        //Releases will be displayed including title, date, media, average rating, total duration of all tracks.
         CommandLineInterface commandLineInterface = this.getCommandLineInterface();
         String title = release.getTitle();
         String date = release.getIssueDate().toString();
@@ -69,16 +92,36 @@ public class BrowsingArtist extends Mode {
         String averageRating = release.getRating() + "";
         String duration = formatDuration(release.getDuration());
 
-        commandLineInterface.outputMessage(title + " " + date + " " + medium + " " + averageRating + " " + duration);
+        commandLineInterface.outputMessage(title);
+        commandLineInterface.outputMessage("\tIssue Date: " + date);
+        commandLineInterface.outputMessage("\tMedium: " + medium);
+        commandLineInterface.outputMessage("\tAverage Rating: " + averageRating + " / 5 stars");
+        commandLineInterface.outputMessage("\tDuration: " + duration);
     }
 
     private void listContent() {
-        for (Song song : songs) {
-            outputSong(song);
+        CommandLineInterface commandLineInterface = getCommandLineInterface();
+
+        outputArtistName();
+
+        commandLineInterface.outputMessage("Singles");
+        commandLineInterface.outputMessage("-----------");
+        if (songs.size() > 0) {
+            for (Song song : songs) {
+                outputSong(song);
+            }
+        } else {
+            commandLineInterface.outputMessage("There are no singles in your library.");
         }
 
-        for (Release release : releases) {
-            outputRelease(release);
+        commandLineInterface.outputMessage("\nReleases");
+        commandLineInterface.outputMessage("-----------");
+        if (releases.size() > 0) {
+            for (Release release : releases) {
+                outputRelease(release);
+            }
+        } else {
+            commandLineInterface.outputMessage("There are no releases in your library.");
         }
     }
 
