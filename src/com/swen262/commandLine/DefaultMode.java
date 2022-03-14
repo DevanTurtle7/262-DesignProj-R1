@@ -1,5 +1,9 @@
 package com.swen262.commandLine;
 
+import com.swen262.personalLibrary.AddByGUID;
+import com.swen262.personalLibrary.PersonalLibrary;
+import com.swen262.personalLibrary.RemoveByGUID;
+
 public class DefaultMode extends Mode {
 
     public DefaultMode(CommandLineInterface commandLineInterface) {
@@ -8,34 +12,85 @@ public class DefaultMode extends Mode {
 
     @Override
     protected void listCommands() {
+        CommandLineInterface commandLineInterface = this.getCommandLineInterface();
         String[] message = {
                 "==========================",
                 "         COMMANDS         ",
                 "==========================",
-                "search [cat] [attr]",
+                "searchlib [cat] [attr]",
                 "   Searches your personal library.",
                 "   [cat]: The type of object you're searching for (artist, song, release).",
                 "   [attr]: The attribute you're searching by (name, type, title, duration, rating, artist).",
+                "searchdb [cat] [attr]",
+                "   Searches the database",
+                "   [cat]: The type of object you're searching for (artist, song, release).",
+                "   [attr]: The attribute you're searching by (name, type, title, duration, rating, artist).",
+                "add [guid] <date>",
+                "   Adds to your personal library.",
+                "   [guid]: The GUID of a song or release you want to add.",
+                "   <date>: (OPTIONAL) The date the song or release was acquired. Defaults to the current time.",
+                "remove [guid]",
+                "   Removes from your personal library.",
+                "   [guid]: The GUID of a song or release you want to remove.",
+                "browse",
+                "   Enters into browsing mode. Displays your personal library.",
+                "quit",
+                "   Exits the program.",
         };
 
         for (String line : message) {
-            System.out.println(line);
+            commandLineInterface.outputMessage(line);
         }
     }
 
     @Override
     protected void handleInput(String input) {
-        String[] tokens = input.split(" ");
-        String command = tokens[0];
+        String[] args = input.split(" ");
+        String command = args[0];
+        CommandLineInterface commandLineInterface = this.getCommandLineInterface();
+        PersonalLibrary library = commandLineInterface.getPersonalLibrary();
 
-        if (command.equals("search")) {
+        if (command.equals("searchlib")) {
+
+        } else if (command.equals("searchdb")) {
 
         } else if (command.equals("add")) {
+            // TODO: ADD DATE
+            if (args.length < 2) {
+                this.unknownCommand();
+            } else {
+                try {
+                    String GUID = args[1];
+                    AddByGUID addSong = new AddByGUID(library);
 
+                    addSong.performAction(GUID);
+                    int numSongs = library.getSongCount();
+                    int numReleases = library.getReleaseCount();
+                    commandLineInterface.outputMessage("Successfully added. Library now has " + numSongs + " songs and " + numReleases + " releases.");
+                } catch (Exception e) {
+                    commandLineInterface.outputMessage("Error adding song");
+                }
+            }
         } else if (command.equals("remove")) {
+            try {
+                String GUID = args[1];
+                RemoveByGUID removeSong = new RemoveByGUID(library);
 
-        } else {
+                removeSong.performAction(GUID);
+                int numSongs = library.getSongCount();
+                int numReleases = library.getReleaseCount();
+                commandLineInterface.outputMessage("Successfully removed. Library now has " + numSongs + " songs and " + numReleases + " releases.");
+            } catch (Exception e) {
+                commandLineInterface.outputMessage("Error removing song");
+            }
+        } else if (command.equals("browse")) {
+            commandLineInterface.setMode(new ChoosingArtist(commandLineInterface));
+        } else if (command.equals("quit")) {
+            commandLineInterface.quit();
+        } else if (command.equals("help")) {
             listCommands();
+        } else {
+            this.unknownCommand();
         }
     }
 }

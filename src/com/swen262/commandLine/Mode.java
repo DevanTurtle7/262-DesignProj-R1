@@ -11,6 +11,10 @@ public abstract class Mode {
         return commandLineInterface;
     }
 
+    protected void unknownCommand() {
+        commandLineInterface.outputMessage("Unknown command. Use the 'help' command to list all commands.");
+    }
+
     protected abstract void listCommands();
     protected abstract void handleInput(String input);
 }
