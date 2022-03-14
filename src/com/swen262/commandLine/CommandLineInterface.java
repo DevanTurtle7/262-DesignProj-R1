@@ -29,12 +29,12 @@ public class CommandLineInterface {
         running = true;
     }
 
-    protected void addByGUID(Song song) throws Exception {
-        addByGUIDAction.performAction(song);
+    protected void addByGUID(String GUID) throws Exception {
+        addByGUIDAction.performAction(GUID);
     }
 
-    protected void removeByGUID(Song song) throws Exception {
-        removeByGUIDAction.performAction(song);
+    protected void removeByGUID(String GUID) throws Exception {
+        removeByGUIDAction.performAction(GUID);
     }
 
     protected PersonalLibrary getPersonalLibrary() {
