@@ -252,6 +252,10 @@ public class PersonalLibrary {
             }
         }
 
+        for (Release release : releases) {
+            duration += release.getDuration();
+        }
+
         return duration;
     }
 }

@@ -46,7 +46,7 @@ public class DefaultMode extends Mode {
         printResultsHeader(results);
 
         for (Artist artist : results) {
-            commandLineInterface.outputMessage(artist.toString() + " | GUID: " + artist.getGUID());
+            commandLineInterface.outputMessage(artist.getName() + " | GUID: " + artist.getGUID());
         }
     }
 
@@ -55,7 +55,7 @@ public class DefaultMode extends Mode {
         printResultsHeader(results);
 
         for (Release release : results) {
-            commandLineInterface.outputMessage(release.toString() + " | GUID: " + release.getGUID());
+            commandLineInterface.outputMessage(release.getTitle() + " | GUID: " + release.getGUID());
         }
     }
 
