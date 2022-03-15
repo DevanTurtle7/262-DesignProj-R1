@@ -1,20 +1,20 @@
 package com.swen262.personalLibrary;
 
+import com.swen262.database.Database;
 import com.swen262.model.Artist;
 import com.swen262.model.Release;
 import com.swen262.model.Song;
-import com.swen262.database.Database;
 
 import java.util.HashSet;
 import java.util.LinkedList;
 
 public class PersonalLibrary {
-    private LinkedList<Song> songs;
-    private LinkedList<Release> releases;
+    private final LinkedList<Song> songs;
+    private final LinkedList<Release> releases;
 
     private static PersonalLibrary activeInstance;
 
-    public PersonalLibrary(LinkedList<Song> songs, LinkedList<Release> releases){
+    public PersonalLibrary(LinkedList<Song> songs, LinkedList<Release> releases) {
         activeInstance = this;
         this.songs = songs;
         this.releases = releases;
@@ -30,19 +30,19 @@ public class PersonalLibrary {
         }
     }
 
-    public PersonalLibrary(){
+    public PersonalLibrary() {
         this(new LinkedList<>(), new LinkedList<>());
     }
 
-    public LinkedList<Song> getSongs(){
+    public LinkedList<Song> getSongs() {
         return this.songs;
     }
 
-    public LinkedList<Release> getReleases(){
+    public LinkedList<Release> getReleases() {
         return this.releases;
     }
 
-    public HashSet<Artist> getArtists(){
+    public HashSet<Artist> getArtists() {
         HashSet<Artist> artists = new HashSet<>();
         for (Song song : songs) {
             artists.add(song.getArtist());
@@ -55,35 +55,33 @@ public class PersonalLibrary {
         return artists;
     }
 
-    protected void addSong(Song song){
-        if(!songs.contains(song)){
+    protected void addSong(Song song) {
+        if (!songs.contains(song)) {
             songs.add(song);
         }
     }
 
-    protected void removeSong(Song song){
-        if(songs.contains(song)){
-            songs.remove(song);
-        }
+    protected void removeSong(Song song) {
+        songs.remove(song);
     }
 
-    protected void addRelease(Release release){
-        if(!releases.contains(release)){
+    protected void addRelease(Release release) {
+        if (!releases.contains(release)) {
             releases.add(release);
         }
     }
 
-    protected void removeRelease(Release release){
-        if(releases.contains(release)){
-            releases.remove(release);
-        }
+    protected void removeRelease(Release release) {
+        releases.remove(release);
     }
 
     public int getSongCount() {
         return songs.size();
     }
 
-    public int getReleaseCount() {return releases.size();}
+    public int getReleaseCount() {
+        return releases.size();
+    }
 
     public HashSet<Song> getSongsFromArtist(Artist artist) {
         HashSet<Song> songsFromArtist = new HashSet<>();

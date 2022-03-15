@@ -9,8 +9,8 @@ import java.util.HashSet;
 
 public class ChoosingArtist extends Mode {
 
-    private HashMap<String, Artist> artistLibrary;
-    private PersonalLibrary library;
+    private final HashMap<String, Artist> artistLibrary;
+    private final PersonalLibrary library;
 
     public ChoosingArtist(CommandLineInterface commandLineInterface) {
         super(commandLineInterface);

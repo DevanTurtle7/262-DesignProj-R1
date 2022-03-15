@@ -22,10 +22,10 @@ import java.util.LinkedList;
  */
 public class Database {
 
-    private LinkedHashSet<Song> songs;
-    private LinkedHashSet<Release> releases;
-    private LinkedHashSet<Artist> artists;
-    private HashMap<Song, Release> songsToRelease;
+    private final LinkedHashSet<Song> songs;
+    private final LinkedHashSet<Release> releases;
+    private final LinkedHashSet<Artist> artists;
+    private final HashMap<Song, Release> songsToRelease;
 
     private final String SONG_CSV_PATH = getClass().getResource("./data/songs.csv").getPath();
     private final String ARTISTS_CSV_PATH = getClass().getResource("./data/artists.csv").getPath();
@@ -33,7 +33,7 @@ public class Database {
 
     private static Database activeInstance;
 
-    public Database(){
+    public Database() {
         activeInstance = this;
 
         artists = new LinkedHashSet<>();
@@ -53,33 +53,33 @@ public class Database {
         }
     }
 
-    public LinkedHashSet<Artist> getArtists(){
+    public LinkedHashSet<Artist> getArtists() {
         return artists;
     }
 
-    public LinkedHashSet<Release> getReleases(){
+    public LinkedHashSet<Release> getReleases() {
         return releases;
     }
 
-    public LinkedHashSet<Song> getSongs(){
+    public LinkedHashSet<Song> getSongs() {
         return songs;
     }
 
-    private void CSVParser(){
+    private void CSVParser() {
         try {
             RFC4180Parser rfcParse = new RFC4180ParserBuilder().withQuoteChar('\'').build();
             RFC4180Parser rfcDoubleParse = new RFC4180ParserBuilder().withQuoteChar('\"').build();
             CSVReader artist_csv_reader = new CSVReaderBuilder(new FileReader(ARTISTS_CSV_PATH)).withCSVParser(rfcParse).build();
             String[] artist_csv_record;
 
-            while ((artist_csv_record = artist_csv_reader.readNext()) != null){
+            while ((artist_csv_record = artist_csv_reader.readNext()) != null) {
                 Artist curArtist = artistParser(artist_csv_record);
                 artists.add(curArtist);
             }
             // songs need to come l8r
-            CSVReader song_csv_reader =  new CSVReaderBuilder(new FileReader(SONG_CSV_PATH)).withCSVParser(rfcDoubleParse).build();
+            CSVReader song_csv_reader = new CSVReaderBuilder(new FileReader(SONG_CSV_PATH)).withCSVParser(rfcDoubleParse).build();
             String[] song_csv_record;
-            while ((song_csv_record = song_csv_reader.readNext()) != null){
+            while ((song_csv_record = song_csv_reader.readNext()) != null) {
                 Song curSong = songParser(song_csv_record);
                 songs.add(curSong);
                 songsToRelease.put(curSong, null);
@@ -87,7 +87,7 @@ public class Database {
 
             CSVReader release_csv_reader = new CSVReaderBuilder(new FileReader(RELEASES_CSV_PATH)).withCSVParser(rfcDoubleParse).build();
             String[] release_csv_record;
-            while ((release_csv_record = release_csv_reader.readNext()) != null){
+            while ((release_csv_record = release_csv_reader.readNext()) != null) {
                 Release curRelease = releaseParser(release_csv_record);
                 releases.add(curRelease);
             }
@@ -99,23 +99,23 @@ public class Database {
         }
     }
 
-    private Artist artistParser(String[] artist_attributes){
+    private Artist artistParser(String[] artist_attributes) {
         String guid = artist_attributes[0];
         String name = artist_attributes[1];
         String type = artist_attributes[2];
-        return new Artist(guid,name,type);
+        return new Artist(guid, name, type);
     }
 
-    public Artist searchArtistByGUID(String GUID){
-        for (Artist artist:artists) {
-            if (GUID.equals(artist.getGUID())){
+    public Artist searchArtistByGUID(String GUID) {
+        for (Artist artist : artists) {
+            if (GUID.equals(artist.getGUID())) {
                 return artist;
             }
         }
         return null;
     }
 
-    private Release releaseParser(String[] release_attributes){
+    private Release releaseParser(String[] release_attributes) {
         int length = release_attributes.length;
         String release_guid = release_attributes[0];
         String artist_guid = release_attributes[1];
@@ -124,63 +124,63 @@ public class Database {
         String issue_date = release_attributes[4];
         //System.out.println("Original issue date: "+issue_date);
         String medium = release_attributes[3];
-        if (issue_date.matches("^\\d\\d\\d\\d$")){
+        if (issue_date.matches("^\\d\\d\\d\\d$")) {
             issue_date += "-01-01";
         }
-        if (issue_date.matches("^\\d\\d\\d\\d-\\d\\d$")){
+        if (issue_date.matches("^\\d\\d\\d\\d-\\d\\d$")) {
             issue_date += "-01";
         }
         //System.out.println(issue_date);
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         Date iss_date;
         LinkedList<Song> tracks = new LinkedList<>();
-        for (int i = 5; i < length ; i++) {
+        for (int i = 5; i < length; i++) {
             String trackGUID = release_attributes[i];
             //System.out.println(track);
             Song track = searchSongByGUID(trackGUID);
             tracks.add(track);
         }
-        try{
+        try {
             iss_date = formatter.parse(issue_date);
-            Release release = new Release(iss_date,title,artist,medium,tracks,release_guid);
+            Release release = new Release(iss_date, title, artist, medium, tracks, release_guid);
 
             for (Song song : tracks) {
                 songsToRelease.replace(song, release);
             }
-            for(Song song : release.getTracks()){
+            for (Song song : release.getTracks()) {
                 song.setRelease(release);
             }
 
             return release;
-        } catch (ParseException e){
+        } catch (ParseException e) {
             System.out.println("ohno error");
             e.getMessage();
         }
         return null;
     }
 
-    public Release searchReleaseByGUID(String GUID){
-        for (Release release: releases) {
-            if (GUID.equals(release.getGUID())){
+    public Release searchReleaseByGUID(String GUID) {
+        for (Release release : releases) {
+            if (GUID.equals(release.getGUID())) {
                 return release;
             }
         }
         return null;
     }
 
-    private Song songParser(String[] song_attributes){
+    private Song songParser(String[] song_attributes) {
 
         String song_guid = song_attributes[0];
         String artist_guid = song_attributes[1];
         Artist artist = searchArtistByGUID(artist_guid);
         int duration = Integer.parseInt(song_attributes[2]);
         String title = song_attributes[3];
-        return new Song(title,artist,duration,song_guid);
+        return new Song(title, artist, duration, song_guid);
     }
 
-    public Song searchSongByGUID(String GUID){
-        for (Song song: songs) {
-            if (GUID.equals(song.getGUID())){
+    public Song searchSongByGUID(String GUID) {
+        for (Song song : songs) {
+            if (GUID.equals(song.getGUID())) {
                 return song;
             }
         }

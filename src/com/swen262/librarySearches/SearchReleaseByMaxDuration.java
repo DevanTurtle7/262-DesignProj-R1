@@ -1,23 +1,23 @@
 package com.swen262.librarySearches;
 
-import java.util.Collections;
-import java.util.LinkedList;
-
 import com.swen262.model.Release;
 import com.swen262.personalLibrary.PersonalLibrary;
 
-public class SearchReleaseByMaxDuration implements LibrarySongSearcher<Release>{
+import java.util.Collections;
+import java.util.LinkedList;
+
+public class SearchReleaseByMaxDuration implements LibrarySongSearcher<Release> {
 
     @Override
     public LinkedList<Release> algorithm(String query) {
         LinkedList<Release> returnReleases = new LinkedList<>();
-        for(Release release : PersonalLibrary.getActiveInstance().getReleases()){
-            if(release.getDuration() <= Integer.parseInt(query)){
+        for (Release release : PersonalLibrary.getActiveInstance().getReleases()) {
+            if (release.getDuration() <= Integer.parseInt(query)) {
                 returnReleases.add(release);
             }
         }
         Collections.sort(returnReleases);
         return returnReleases;
     }
-    
+
 }

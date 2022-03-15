@@ -3,17 +3,17 @@ package com.swen262.model;
 import java.util.Date;
 import java.util.LinkedList;
 
-public class Release implements Comparable<Release>{
-    private Date issueDate;
-    private String title;
-    private Artist artist;
-    private int rating;
-    private String GUID;
-    private String medium;
+public class Release implements Comparable<Release> {
+    private final Date issueDate;
+    private final String title;
+    private final Artist artist;
+    private final int rating;
+    private final String GUID;
+    private final String medium;
     private int duration;
-    private LinkedList<Song> tracks;
+    private final LinkedList<Song> tracks;
 
-    public Release(Date issueDate, String title, Artist artist, String medium, LinkedList<Song> tracks, String GUID){
+    public Release(Date issueDate, String title, Artist artist, String medium, LinkedList<Song> tracks, String GUID) {
         this.issueDate = issueDate;
         this.title = title;
         this.artist = artist;
@@ -21,49 +21,49 @@ public class Release implements Comparable<Release>{
         this.tracks = tracks;
         this.rating = calculateRating();
         this.GUID = GUID;
-        for(Song song : tracks){
-            duration+=song.getDuration();
+        for (Song song : tracks) {
+            duration += song.getDuration();
         }
     }
 
-    public Release(String title, Artist artist, String medium, LinkedList<Song> tracks, String GUID){
+    public Release(String title, Artist artist, String medium, LinkedList<Song> tracks, String GUID) {
         this(new Date(), title, artist, medium, tracks, GUID);
-        
+
     }
 
-    private int calculateRating(){
+    private int calculateRating() {
         int totalRate = 0;
-        for(Song song : tracks){
+        for (Song song : tracks) {
             totalRate += song.getRating();
         }
         return Math.round(totalRate / tracks.size());
     }
 
-    public Date getIssueDate(){
+    public Date getIssueDate() {
         return this.issueDate;
     }
 
-    public String getTitle(){
+    public String getTitle() {
         return this.title;
     }
 
-    public Artist getArtist(){
+    public Artist getArtist() {
         return this.artist;
     }
 
-    public int getRating(){
+    public int getRating() {
         return this.rating;
     }
 
-    public String getGUID(){
+    public String getGUID() {
         return this.GUID;
     }
 
-    public String getMedium(){
+    public String getMedium() {
         return this.medium;
     }
 
-    public LinkedList<Song> getTracks(){
+    public LinkedList<Song> getTracks() {
         return this.tracks;
     }
 
@@ -71,7 +71,7 @@ public class Release implements Comparable<Release>{
     public int compareTo(Release o) {
         return this.rating - o.rating;
     }
-  
+
     public int getDuration() {
         int duration = 0;
 

@@ -9,10 +9,10 @@ import com.swen262.util.Formatter;
 import java.util.HashSet;
 
 public class BrowsingArtist extends Mode {
-    private PersonalLibrary library;
-    private Artist artist;
-    private HashSet<Song> songs;
-    private HashSet<Release> releases;
+    private final PersonalLibrary library;
+    private final Artist artist;
+    private final HashSet<Song> songs;
+    private final HashSet<Release> releases;
 
     private final int NUM_SPACES = 5;
 

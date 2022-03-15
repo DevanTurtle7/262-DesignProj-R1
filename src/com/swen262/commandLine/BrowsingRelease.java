@@ -8,7 +8,7 @@ import java.util.LinkedList;
 
 public class BrowsingRelease extends Mode {
 
-    private Release release;
+    private final Release release;
 
     private final int NUM_SPACES = 5;
 

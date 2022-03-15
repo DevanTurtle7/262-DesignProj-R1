@@ -1,23 +1,23 @@
 package com.swen262.librarySearches;
 
-import java.util.Collections;
-import java.util.LinkedList;
-
 import com.swen262.model.Artist;
 import com.swen262.personalLibrary.PersonalLibrary;
 
-public class SearchArtistByType implements LibrarySongSearcher<Artist>{
+import java.util.Collections;
+import java.util.LinkedList;
+
+public class SearchArtistByType implements LibrarySongSearcher<Artist> {
 
     @Override
     public LinkedList<Artist> algorithm(String query) {
         LinkedList<Artist> returnArtists = new LinkedList<>();
-        for(Artist artist : PersonalLibrary.getActiveInstance().getArtists()){
-            if(artist.getType().toLowerCase().equals(query.toLowerCase())){
+        for (Artist artist : PersonalLibrary.getActiveInstance().getArtists()) {
+            if (artist.getType().equalsIgnoreCase(query)) {
                 returnArtists.add(artist);
             }
         }
         Collections.sort(returnArtists);
         return returnArtists;
     }
-    
+
 }

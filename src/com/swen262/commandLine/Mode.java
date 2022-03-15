@@ -1,7 +1,7 @@
 package com.swen262.commandLine;
 
 public abstract class Mode {
-    private CommandLineInterface commandLineInterface;
+    private final CommandLineInterface commandLineInterface;
 
     public Mode(CommandLineInterface commandLineInterface) {
         this.commandLineInterface = commandLineInterface;
@@ -16,5 +16,6 @@ public abstract class Mode {
     }
 
     protected abstract void listCommands();
+
     protected abstract void handleInput(String input);
 }

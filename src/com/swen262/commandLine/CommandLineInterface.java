@@ -9,9 +9,9 @@ import java.util.Scanner;
 
 public class CommandLineInterface {
 
-    private Action addByGUIDAction;
-    private Action removeByGUIDAction;
-    private RateByGUID rateByGUIDAction;
+    private final Action addByGUIDAction;
+    private final Action removeByGUIDAction;
+    private final RateByGUID rateByGUIDAction;
     private PersonalLibrary library;
 
     private Mode currentMode;
