@@ -1,12 +1,22 @@
 package com.swen262.personalLibrary;
 
-import com.swen262.Main;
 import com.swen262.Release;
 import com.swen262.Song;
 import com.swen262.database.Database;
 import com.swen262.exceptions.GUIDNotFoundException;
 
-public class AddByGUID implements Action{
+public class RateByGUID implements Action {
+
+    private int rating;
+
+    public RateByGUID() {
+        rating = 0;
+    }
+
+    public void setRating(int rating) {
+        this.rating = rating;
+    }
+
     @Override
     public void performAction(Object o) throws Exception {
         PersonalLibrary library = PersonalLibrary.getActiveInstance();
@@ -17,15 +27,9 @@ public class AddByGUID implements Action{
             Song song = db.searchSongByGUID(GUID);
 
             if (song == null) {
-                Release release = db.searchReleaseByGUID(GUID);
-
-                if (release == null) {
-                    throw new GUIDNotFoundException();
-                } else {
-                    library.addRelease(release);
-                }
+                throw new GUIDNotFoundException();
             } else {
-                library.addSong(song);
+                song.rate(rating);
             }
         }
     }

@@ -2,6 +2,7 @@ package com.swen262;
 
 import java.util.Date;
 import java.util.LinkedHashSet;
+import java.util.LinkedList;
 
 public class Release implements Comparable<Release>{
     private Date issueDate;
@@ -10,10 +11,10 @@ public class Release implements Comparable<Release>{
     private int rating;
     private String GUID;
     private String medium;
-    private LinkedHashSet<Song> tracks;
     private int duration;
+    private LinkedList<Song> tracks;
 
-    public Release(Date issueDate, String title, Artist artist, String medium, LinkedHashSet<Song> tracks, String GUID){
+    public Release(Date issueDate, String title, Artist artist, String medium, LinkedList<Song> tracks, String GUID){
         this.issueDate = issueDate;
         this.title = title;
         this.artist = artist;
@@ -26,7 +27,7 @@ public class Release implements Comparable<Release>{
         }
     }
 
-    public Release(String title, Artist artist, String medium, LinkedHashSet<Song> tracks, String GUID){
+    public Release(String title, Artist artist, String medium, LinkedList<Song> tracks, String GUID){
         this(new Date(), title, artist, medium, tracks, GUID);
         
     }
@@ -67,12 +68,22 @@ public class Release implements Comparable<Release>{
         return this.medium;
     }
 
-    public LinkedHashSet<Song> getTracks(){
+    public LinkedList<Song> getTracks(){
         return this.tracks;
     }
 
     @Override
     public int compareTo(Release o) {
         return this.rating - o.rating;
+    }
+  
+    public int getDuration() {
+        int duration = 0;
+
+        for (Song songs : tracks) {
+            duration += songs.getDuration();
+        }
+
+        return duration;
     }
 }

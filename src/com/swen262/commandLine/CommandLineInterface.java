@@ -1,10 +1,7 @@
 package com.swen262.commandLine;
 
 import com.swen262.Song;
-import com.swen262.personalLibrary.Action;
-import com.swen262.personalLibrary.AddByGUID;
-import com.swen262.personalLibrary.PersonalLibrary;
-import com.swen262.personalLibrary.RemoveByGUID;
+import com.swen262.personalLibrary.*;
 
 import java.util.Scanner;
 
@@ -12,6 +9,7 @@ public class CommandLineInterface {
 
     private Action addByGUIDAction;
     private Action removeByGUIDAction;
+    private RateByGUID rateByGUIDAction;
     private PersonalLibrary library;
 
     private Mode currentMode;
@@ -19,10 +17,9 @@ public class CommandLineInterface {
     private boolean running;
 
     public CommandLineInterface() {
-        library = PersonalLibrary.loadPersonalLibrary();
-
-        addByGUIDAction = new AddByGUID(library);
-        removeByGUIDAction = new RemoveByGUID(library);
+        addByGUIDAction = new AddByGUID();
+        removeByGUIDAction = new RemoveByGUID();
+        rateByGUIDAction = new RateByGUID();
 
         currentMode = new DefaultMode(this);
 
@@ -35,10 +32,6 @@ public class CommandLineInterface {
 
     protected void removeByGUID(String GUID) throws Exception {
         removeByGUIDAction.performAction(GUID);
-    }
-
-    protected PersonalLibrary getPersonalLibrary() {
-        return library;
     }
 
     protected void outputMessage(String message) {
@@ -55,6 +48,11 @@ public class CommandLineInterface {
 
     protected void setMode(Mode newMode) {
         this.currentMode = newMode;
+    }
+
+    protected void rateByGUID(String GUID, int rating) throws Exception {
+        rateByGUIDAction.setRating(rating);
+        rateByGUIDAction.performAction(GUID);
     }
 
     public void run() {

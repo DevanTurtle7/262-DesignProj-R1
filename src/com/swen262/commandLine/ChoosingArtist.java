@@ -10,12 +10,13 @@ import java.util.Locale;
 public class ChoosingArtist extends Mode {
 
     private HashMap<String, Artist> artistLibrary;
+    private PersonalLibrary library;
 
     public ChoosingArtist(CommandLineInterface commandLineInterface) {
         super(commandLineInterface);
 
         artistLibrary = new HashMap<>();
-        PersonalLibrary library = commandLineInterface.getPersonalLibrary();
+        library = PersonalLibrary.getActiveInstance();
         HashSet<Artist> artists = library.getArtists();
 
         for (Artist artist : artists) {
@@ -28,7 +29,6 @@ public class ChoosingArtist extends Mode {
 
     private void printArtists() {
         CommandLineInterface commandLineInterface = this.getCommandLineInterface();
-        PersonalLibrary library = commandLineInterface.getPersonalLibrary();
         HashSet<Artist> artists = library.getArtists();
 
         if (artists.size() > 0) {
@@ -78,7 +78,6 @@ public class ChoosingArtist extends Mode {
         String[] args = input.split(" ");
         String command = args[0];
         CommandLineInterface commandLineInterface = this.getCommandLineInterface();
-        PersonalLibrary library = commandLineInterface.getPersonalLibrary();
 
         if (command.equals("ls")) {
             printArtists();

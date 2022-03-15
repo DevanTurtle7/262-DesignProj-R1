@@ -5,8 +5,12 @@ import com.swen262.personalLibrary.PersonalLibrary;
 
 public class DefaultMode extends Mode {
 
+    private PersonalLibrary library;
+
     public DefaultMode(CommandLineInterface commandLineInterface) {
         super(commandLineInterface);
+
+        library = PersonalLibrary.getActiveInstance();
     }
 
     @Override
@@ -31,6 +35,10 @@ public class DefaultMode extends Mode {
                 "remove [guid]",
                 "   Removes from your personal library.",
                 "   [guid]: The GUID of a song or release you want to remove.",
+                "rate [guid] [rating]",
+                "   Rates a song",
+                "   [guid]: The GUID of the song you want to rate",
+                "   [rating]: The rating you want to give the song. An integer between 1 and 5.",
                 "browse",
                 "   Enters into browsing mode. Displays your personal library.",
                 "quit",
@@ -47,7 +55,6 @@ public class DefaultMode extends Mode {
         String[] args = input.split(" ");
         String command = args[0];
         CommandLineInterface commandLineInterface = this.getCommandLineInterface();
-        PersonalLibrary library = commandLineInterface.getPersonalLibrary();
 
         if (command.equals("searchlib")) {
 
@@ -79,6 +86,25 @@ public class DefaultMode extends Mode {
                 int numSongs = library.getSongCount();
                 int numReleases = library.getReleaseCount();
                 commandLineInterface.outputMessage("Successfully removed. Library now has " + numSongs + " songs and " + numReleases + " releases.");
+            } catch (Exception e) {
+                commandLineInterface.outputMessage("Something went wrong.");
+            }
+        } else if (command.equals("rate")) {
+            try {
+                if (args.length < 3) {
+                    this.unknownCommand();
+                } else {
+                    String GUID = args[1];
+                    int rating = Integer.parseInt(args[2]);
+
+                    if (rating > 5 || rating < 1) {
+                        commandLineInterface.outputMessage("Ratings must be between 1 and 5.");
+                    } else {
+                        commandLineInterface.rateByGUID(GUID, rating);
+                    }
+                }
+            } catch (GUIDNotFoundException e) {
+                commandLineInterface.outputMessage("Error rating song. Could not find song with matching GUID.");
             } catch (Exception e) {
                 commandLineInterface.outputMessage("Something went wrong.");
             }
