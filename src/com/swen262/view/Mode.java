@@ -1,4 +1,4 @@
-package com.swen262.commandLine;
+package com.swen262.view;
 
 public abstract class Mode {
     private final CommandLineInterface commandLineInterface;

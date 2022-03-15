@@ -1,4 +1,4 @@
-package com.swen262.commandLine;
+package com.swen262.view;
 
 import com.swen262.model.Release;
 import com.swen262.model.Song;

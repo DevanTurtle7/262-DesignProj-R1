@@ -1,4 +1,4 @@
-package com.swen262.commandLine;
+package com.swen262.view;
 
 import com.swen262.DBSearches.SearchArtistByName;
 import com.swen262.DBSearches.SearchReleaseByArtistGUID;
@@ -14,7 +14,10 @@ import com.swen262.model.Release;
 import com.swen262.model.Song;
 import com.swen262.personalLibrary.PersonalLibrary;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.LinkedList;
+import java.util.Locale;
 
 public class DefaultMode extends Mode {
 
@@ -85,7 +88,7 @@ public class DefaultMode extends Mode {
                 "add [guid] <date>",
                 "   Adds to your personal library.",
                 "   [guid]: The GUID of a song or release you want to add.",
-                "   <date>: (OPTIONAL) The date the song or release was acquired. Defaults to the current time.",
+                "   <date>: (OPTIONAL) The date the song or release was acquired. Defaults to the current time. Format in MM-DD-YYYY",
                 "remove [guid]",
                 "   Removes from your personal library.",
                 "   [guid]: The GUID of a song or release you want to remove.",
@@ -286,7 +289,17 @@ public class DefaultMode extends Mode {
             } else {
                 try {
                     String GUID = args[1];
-                    commandLineInterface.addByGUID(GUID);
+                    LocalDate date;
+
+                    if (args.length >= 3) {
+                        String dateStr = args[2];
+                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM-dd-yyyy", Locale.ENGLISH);
+                        date = LocalDate.parse(dateStr, formatter);
+                    } else {
+                        date = LocalDate.now();
+                    }
+
+                    commandLineInterface.addByGUID(GUID, date);
 
                     int numSongs = library.getSongCount();
                     int numReleases = library.getReleaseCount();

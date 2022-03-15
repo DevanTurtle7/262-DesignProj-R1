@@ -1,4 +1,4 @@
-package com.swen262.commandLine;
+package com.swen262.view;
 
 import com.swen262.model.Artist;
 import com.swen262.personalLibrary.PersonalLibrary;

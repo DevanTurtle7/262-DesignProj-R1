@@ -5,12 +5,15 @@ import com.swen262.model.Artist;
 import com.swen262.model.Release;
 import com.swen262.model.Song;
 
+import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
 
 public class PersonalLibrary {
     private final LinkedList<Song> songs;
     private final LinkedList<Release> releases;
+    private final HashMap<Song, LocalDate> datesAdded;
 
     private static PersonalLibrary activeInstance;
 
@@ -18,6 +21,7 @@ public class PersonalLibrary {
         activeInstance = this;
         this.songs = songs;
         this.releases = releases;
+        this.datesAdded = new HashMap<>();
     }
 
     public static PersonalLibrary getActiveInstance() {
@@ -55,9 +59,10 @@ public class PersonalLibrary {
         return artists;
     }
 
-    protected void addSong(Song song) {
+    protected void addSong(Song song, LocalDate date) {
         if (!songs.contains(song)) {
             songs.add(song);
+            datesAdded.put(song, date);
         }
     }
 

@@ -1,15 +1,16 @@
-package com.swen262.commandLine;
+package com.swen262.view;
 
 import com.swen262.DBSearches.DBSongSearcher;
 import com.swen262.librarySearches.LibrarySongSearcher;
 import com.swen262.personalLibrary.*;
 
+import java.time.LocalDate;
 import java.util.LinkedList;
 import java.util.Scanner;
 
 public class CommandLineInterface {
 
-    private final Action addByGUIDAction;
+    private final AddByGUID addByGUIDAction;
     private final Action removeByGUIDAction;
     private final RateByGUID rateByGUIDAction;
     private PersonalLibrary library;
@@ -53,7 +54,8 @@ public class CommandLineInterface {
         return results;
     }
 
-    protected void addByGUID(String GUID) throws Exception {
+    protected void addByGUID(String GUID, LocalDate date) throws Exception {
+        addByGUIDAction.setDate(date);
         addByGUIDAction.performAction(GUID);
     }
 

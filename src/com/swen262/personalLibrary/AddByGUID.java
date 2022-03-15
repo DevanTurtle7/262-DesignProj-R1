@@ -5,7 +5,21 @@ import com.swen262.exceptions.GUIDNotFoundException;
 import com.swen262.model.Release;
 import com.swen262.model.Song;
 
+import java.time.LocalDate;
+import java.util.Date;
+
 public class AddByGUID implements Action {
+
+    private LocalDate date;
+
+    public AddByGUID() {
+        date = LocalDate.now();
+    }
+
+    public void setDate(LocalDate date) {
+        this.date = date;
+    }
+
     @Override
     public void performAction(Object o) throws Exception {
         PersonalLibrary library = PersonalLibrary.getActiveInstance();
@@ -24,7 +38,7 @@ public class AddByGUID implements Action {
                     library.addRelease(release);
                 }
             } else {
-                library.addSong(song);
+                library.addSong(song, date);
             }
         }
     }
