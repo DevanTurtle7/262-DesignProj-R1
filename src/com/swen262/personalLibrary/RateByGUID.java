@@ -4,6 +4,9 @@ import com.swen262.database.Database;
 import com.swen262.exceptions.GUIDNotFoundException;
 import com.swen262.model.Song;
 
+/**
+ * Inherits from Action. Concrete Command.
+ */
 public class RateByGUID implements Action {
 
     private int rating;
@@ -16,6 +19,11 @@ public class RateByGUID implements Action {
         this.rating = rating;
     }
 
+    /**
+     * Searches database to find an object with the GUID> Then, adds a rating to the object,
+     * @param o Generic Java Object. In This case, should be a String.
+     * @throws Exception
+     */
     @Override
     public void performAction(Object o) throws Exception {
         PersonalLibrary library = PersonalLibrary.getActiveInstance();

@@ -7,6 +7,9 @@ import com.swen262.model.Song;
 
 import java.time.LocalDate;
 
+/**
+ * Inherits from Action. Concrete Command.
+ */
 public class AddByGUID implements Action {
 
     private LocalDate date;
@@ -19,6 +22,11 @@ public class AddByGUID implements Action {
         this.date = date;
     }
 
+    /**
+     * Searches database to find an object with the GUID> Then, adds to library,
+     * @param o Generic Java Object. In This case, should be a String.
+     * @throws Exception
+     */
     @Override
     public void performAction(Object o) throws Exception {
         PersonalLibrary library = PersonalLibrary.getActiveInstance();
