@@ -6,6 +6,9 @@ import com.swen262.model.Song;
 
 import java.util.LinkedList;
 
+/**
+ * Searches the DB for Releases that have a Song with a name matching the query
+ */
 public class SearchReleaseByTrackName implements DBSearcher<Release> {
 
     @Override

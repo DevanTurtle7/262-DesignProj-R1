@@ -6,6 +6,10 @@ import com.swen262.personalLibrary.PersonalLibrary;
 import java.util.Collections;
 import java.util.LinkedList;
 
+/**
+ * Searches the PersonalLibrary for Releases
+ * with a duration greater than the query
+ */
 public class SearchReleaseByMinDuration implements LibrarySearcher<Release> {
 
     @Override

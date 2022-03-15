@@ -5,6 +5,9 @@ import com.swen262.model.Song;
 
 import java.util.LinkedList;
 
+/**
+ * Searches the DB for Songs that have an Artist name matching the query
+ */
 public class SearchSongByArtist implements DBSearcher<Song> {
 
     @Override

@@ -6,6 +6,10 @@ import com.swen262.personalLibrary.PersonalLibrary;
 import java.util.Collections;
 import java.util.LinkedList;
 
+/**
+ * Searches the PersonalLibrary for Artists 
+ * with a rating greater than or equal to the substring
+ */
 public class SearchArtistByRating implements LibrarySearcher<Artist> {
 
     @Override

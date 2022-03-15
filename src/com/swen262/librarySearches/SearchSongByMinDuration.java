@@ -6,6 +6,10 @@ import com.swen262.personalLibrary.PersonalLibrary;
 import java.util.Collections;
 import java.util.LinkedList;
 
+/**
+ * Searches the PersonalLibrary for Songs
+ * with a duration greater than or equal to the query
+ */
 public class SearchSongByMinDuration implements LibrarySearcher<Song> {
 
     @Override

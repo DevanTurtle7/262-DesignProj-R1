@@ -5,6 +5,9 @@ import com.swen262.model.Song;
 
 import java.util.LinkedList;
 
+/**
+ * Searches the DB for Songs that have a title substring matching the query
+ */
 public class SearchSongByTitle implements DBSearcher<Song> {
 
     @Override

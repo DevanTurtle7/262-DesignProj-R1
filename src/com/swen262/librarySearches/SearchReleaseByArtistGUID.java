@@ -6,6 +6,10 @@ import com.swen262.personalLibrary.PersonalLibrary;
 import java.util.Collections;
 import java.util.LinkedList;
 
+/**
+ * Searches the PersonalLibrary for Releases
+ * with an Artist GUID matching the query
+ */
 public class SearchReleaseByArtistGUID implements LibrarySearcher<Release> {
 
     @Override

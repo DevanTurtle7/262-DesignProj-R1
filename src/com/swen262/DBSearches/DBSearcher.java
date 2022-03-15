@@ -8,5 +8,11 @@ import java.util.LinkedList;
  * given query information
  */
 public interface DBSearcher<E> {
+    /**
+     * An algorithm to return a LinkedList of the generic type used by
+     * the concrete strategy.
+     * @param query The query used to search the database
+     * @return a LinkedList of the generic type used by the concrete strategy
+     */
     LinkedList<E> algorithm(String query);
 }
