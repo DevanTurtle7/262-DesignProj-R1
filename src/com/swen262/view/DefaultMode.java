@@ -334,6 +334,7 @@ public class DefaultMode extends Mode {
                         commandLineInterface.outputMessage("Ratings must be between 1 and 5.");
                     } else {
                         commandLineInterface.rateByGUID(GUID, rating);
+                        commandLineInterface.outputMessage("Successfully rated.");
                     }
                 }
             } catch (GUIDNotFoundException e) {
