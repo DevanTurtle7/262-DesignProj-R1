@@ -148,6 +148,9 @@ public class Database {
             for (Song song : tracks) {
                 songsToRelease.replace(song, release);
             }
+            for(Song song : release.getTracks()){
+                song.setRelease(release);
+            }
 
             return release;
         } catch (ParseException e){

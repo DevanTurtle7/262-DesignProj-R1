@@ -4,13 +4,14 @@ import java.util.Date;
 import java.util.LinkedHashSet;
 import java.util.LinkedList;
 
-public class Release {
+public class Release implements Comparable<Release>{
     private Date issueDate;
     private String title;
     private Artist artist;
     private int rating;
     private String GUID;
     private String medium;
+    private int duration;
     private LinkedList<Song> tracks;
 
     public Release(Date issueDate, String title, Artist artist, String medium, LinkedList<Song> tracks, String GUID){
@@ -21,6 +22,9 @@ public class Release {
         this.tracks = tracks;
         this.rating = calculateRating();
         this.GUID = GUID;
+        for(Song song : tracks){
+            duration+=song.getDuration();
+        }
     }
 
     public Release(String title, Artist artist, String medium, LinkedList<Song> tracks, String GUID){
@@ -64,6 +68,11 @@ public class Release {
         return this.tracks;
     }
 
+    @Override
+    public int compareTo(Release o) {
+        return this.rating - o.rating;
+    }
+  
     public int getDuration() {
         int duration = 0;
 

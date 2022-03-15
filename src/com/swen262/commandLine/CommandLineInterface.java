@@ -1,8 +1,11 @@
 package com.swen262.commandLine;
 
+import com.swen262.DBSearches.DBSongSearcher;
 import com.swen262.Song;
+import com.swen262.librarySearches.LibrarySongSearcher;
 import com.swen262.personalLibrary.*;
 
+import java.util.LinkedList;
 import java.util.Scanner;
 
 public class CommandLineInterface {
@@ -13,6 +16,8 @@ public class CommandLineInterface {
     private PersonalLibrary library;
 
     private Mode currentMode;
+    private DBSongSearcher dbSearchStrategy;
+    private LibrarySongSearcher libSearchStrategy;
 
     private boolean running;
 
@@ -24,6 +29,24 @@ public class CommandLineInterface {
         currentMode = new DefaultMode(this);
 
         running = true;
+    }
+
+    protected void setDBSearchStrategy(DBSongSearcher strategy) {
+        this.dbSearchStrategy = strategy;
+    }
+
+    protected void setLibSearchStrategy(LibrarySongSearcher strategy) {
+        this.libSearchStrategy = strategy;
+    }
+
+    protected LinkedList searchLibrary(String query) {
+        LinkedList results = libSearchStrategy.algorithm(query);
+        return results;
+    }
+
+    protected LinkedList searchDatabase(String query) {
+        LinkedList results = dbSearchStrategy.algorithm(query);
+        return results;
     }
 
     protected void addByGUID(String GUID) throws Exception {
