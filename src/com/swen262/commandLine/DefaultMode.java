@@ -1,7 +1,13 @@
 package com.swen262.commandLine;
 
+import com.swen262.Artist;
+import com.swen262.DBSearches.SearchArtistByName;
+import com.swen262.Release;
+import com.swen262.Song;
 import com.swen262.exceptions.GUIDNotFoundException;
 import com.swen262.personalLibrary.PersonalLibrary;
+
+import java.util.LinkedList;
 
 public class DefaultMode extends Mode {
 
@@ -13,6 +19,45 @@ public class DefaultMode extends Mode {
         library = PersonalLibrary.getActiveInstance();
     }
 
+    private void printResultsHeader(LinkedList results) {
+        CommandLineInterface commandLineInterface = this.getCommandLineInterface();
+        int numResults = results.size();
+
+        if (numResults == 0) {
+            commandLineInterface.outputMessage("No results found.");
+        } else {
+            commandLineInterface.outputMessage("Results (" + numResults + ")");
+            commandLineInterface.outputMessage("---------------");
+        }
+    }
+
+    private void printArtistResults(LinkedList<Artist> results) {
+        CommandLineInterface commandLineInterface = this.getCommandLineInterface();
+        printResultsHeader(results);
+
+        for (Artist artist : results) {
+            commandLineInterface.outputMessage(artist.toString());
+        }
+    }
+
+    private void printReleaseResults(LinkedList<Release> results) {
+        CommandLineInterface commandLineInterface = this.getCommandLineInterface();
+        printResultsHeader(results);
+
+        for (Release release : results) {
+            commandLineInterface.outputMessage(release.toString());
+        }
+    }
+
+    private void printSongResults(LinkedList<Song> results) {
+        CommandLineInterface commandLineInterface = this.getCommandLineInterface();
+        printResultsHeader(results);
+
+        for (Song song : results) {
+            commandLineInterface.outputMessage(song.toString());
+        }
+    }
+
     @Override
     protected void listCommands() {
         CommandLineInterface commandLineInterface = this.getCommandLineInterface();
@@ -20,14 +65,16 @@ public class DefaultMode extends Mode {
                 "==========================",
                 "         COMMANDS         ",
                 "==========================",
-                "searchlib [cat] [attr]",
+                "searchlib [cat] [attr] [query]",
                 "   Searches your personal library.",
                 "   [cat]: The type of object you're searching for (artist, song, release).",
                 "   [attr]: The attribute you're searching by (name, type, title, duration, rating, artist).",
-                "searchdb [cat] [attr]",
+                "   [query]: Your search query.",
+                "searchdb [cat] [attr] [query]",
                 "   Searches the database",
                 "   [cat]: The type of object you're searching for (artist, song, release).",
                 "   [attr]: The attribute you're searching by (name, type, title, duration, rating, artist).",
+                "   [query]: Your search query.",
                 "add [guid] <date>",
                 "   Adds to your personal library.",
                 "   [guid]: The GUID of a song or release you want to add.",
@@ -59,7 +106,37 @@ public class DefaultMode extends Mode {
         if (command.equals("searchlib")) {
 
         } else if (command.equals("searchdb")) {
+            if (args.length < 4) {
+                this.unknownCommand();
+            } else {
+                String cat = args[1];
+                String attr = args[2];
+                String query = "";
 
+                for (int i = 3; i < args.length; i++) {
+                    query += args[i];
+
+                    if (i < args.length - 1) {
+                        query += " ";
+                    }
+                }
+
+                if (cat.equals("artist")) {
+                    if (attr.equals("name")) {
+                        commandLineInterface.setDBSearchStrategy(new SearchArtistByName());
+                        LinkedList<Artist> results = commandLineInterface.searchDatabase(query);
+                        printArtistResults(results);
+                    } else {
+                        commandLineInterface.outputMessage("Error: Artists can only be searched by name.");
+                    }
+                } else if (cat.equals("release")) {
+
+                } else if (cat.equals("song")) {
+
+                } else {
+                    commandLineInterface.outputMessage("Error: Only artists, releases and songs can be searched for.");
+                }
+            }
         } else if (command.equals("add")) {
             // TODO: ADD DATE
             if (args.length < 2) {
