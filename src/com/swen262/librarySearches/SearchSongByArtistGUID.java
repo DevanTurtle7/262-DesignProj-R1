@@ -1,15 +1,23 @@
 package com.swen262.librarySearches;
 
+import java.util.Collections;
 import java.util.LinkedList;
 
 import com.swen262.Song;
+import com.swen262.personalLibrary.PersonalLibrary;
 
 public class SearchSongByArtistGUID implements LibrarySongSearcher<Song>{
 
     @Override
     public LinkedList<Song> algorithm(String query) {
-        // TODO Auto-generated method stub
-        return null;
+        LinkedList<Song> returnSongs = new LinkedList<>();
+        for(Song song : PersonalLibrary.getActiveInstance().getSongs()){
+            if(song.getArtist().getGUID().equals(query)){
+                returnSongs.add(song);
+            }
+        }
+        Collections.sort(returnSongs);
+        return returnSongs;
     }
     
 }

@@ -6,13 +6,13 @@ import java.util.LinkedList;
 import com.swen262.Song;
 import com.swen262.personalLibrary.PersonalLibrary;
 
-public class SearchSongByArtistName implements LibrarySongSearcher<Song>{
+public class SearchSongByMinDuration implements LibrarySongSearcher<Song>{
 
     @Override
     public LinkedList<Song> algorithm(String query) {
         LinkedList<Song> returnSongs = new LinkedList<>();
         for(Song song : PersonalLibrary.getActiveInstance().getSongs()){
-            if(song.getArtist().getName().toLowerCase().equals(query.toLowerCase())){
+            if(song.getDuration() >= Integer.parseInt(query)){
                 returnSongs.add(song);
             }
         }
