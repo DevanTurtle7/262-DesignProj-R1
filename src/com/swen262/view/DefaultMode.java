@@ -283,7 +283,6 @@ public class DefaultMode extends Mode {
                 }
             }
         } else if (command.equals("add")) {
-            // TODO: ADD DATE
             if (args.length < 2) {
                 this.unknownCommand();
             } else {
