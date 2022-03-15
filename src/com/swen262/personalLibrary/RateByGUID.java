@@ -2,21 +2,18 @@ package com.swen262.personalLibrary;
 
 import com.swen262.database.Database;
 import com.swen262.exceptions.GUIDNotFoundException;
-import com.swen262.model.Release;
 import com.swen262.model.Song;
 
-import java.time.LocalDate;
+public class RateByGUID implements Action {
 
-public class AddByGUID implements Action {
+    private int rating;
 
-    private LocalDate date;
-
-    public AddByGUID() {
-        date = LocalDate.now();
+    public RateByGUID() {
+        rating = 0;
     }
 
-    public void setDate(LocalDate date) {
-        this.date = date;
+    public void setRating(int rating) {
+        this.rating = rating;
     }
 
     @Override
@@ -29,15 +26,9 @@ public class AddByGUID implements Action {
             Song song = db.searchSongByGUID(GUID);
 
             if (song == null) {
-                Release release = db.searchReleaseByGUID(GUID);
-
-                if (release == null) {
-                    throw new GUIDNotFoundException();
-                } else {
-                    library.addRelease(release);
-                }
+                throw new GUIDNotFoundException();
             } else {
-                library.addSong(song, date);
+                song.rate(rating);
             }
         }
     }

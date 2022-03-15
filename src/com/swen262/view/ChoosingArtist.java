@@ -1,16 +1,16 @@
-package com.swen262.commandLine;
+package com.swen262.view;
 
-import com.swen262.Artist;
+import com.swen262.model.Artist;
 import com.swen262.personalLibrary.PersonalLibrary;
+import com.swen262.util.Formatter;
 
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Locale;
 
 public class ChoosingArtist extends Mode {
 
-    private HashMap<String, Artist> artistLibrary;
-    private PersonalLibrary library;
+    private final HashMap<String, Artist> artistLibrary;
+    private final PersonalLibrary library;
 
     public ChoosingArtist(CommandLineInterface commandLineInterface) {
         super(commandLineInterface);
@@ -43,7 +43,13 @@ public class ChoosingArtist extends Mode {
             }
 
             for (Artist artist : artists) {
+                String name = artist.getName();
+                String disambiguation = artist.getType();
+                int duration = library.getDurationFromArtist(artist);
+
                 commandLineInterface.outputMessage(artist.getName());
+                commandLineInterface.outputMessage("\tType: " + disambiguation);
+                commandLineInterface.outputMessage("\tDuration of Songs: " + Formatter.formatDuration(duration));
             }
 
             commandLineInterface.outputMessage("\nEnter artists name to browse or esc to exit...");

@@ -1,22 +1,18 @@
-package com.swen262.commandLine;
+package com.swen262.view;
 
-import com.swen262.Artist;
-import com.swen262.Release;
-import com.swen262.Song;
+import com.swen262.model.Artist;
+import com.swen262.model.Release;
+import com.swen262.model.Song;
 import com.swen262.personalLibrary.PersonalLibrary;
+import com.swen262.util.Formatter;
 
 import java.util.HashSet;
-import java.util.Locale;
 
 public class BrowsingArtist extends Mode {
-    private PersonalLibrary library;
-    private Artist artist;
-    private HashSet<Song> songs;
-    private HashSet<Release> releases;
-
-    private final int MS_IN_HOUR = 3600000;
-    private final int MS_IN_MINUTE = 60000;
-    private final int MS_IN_SECOND = 1000;
+    private final PersonalLibrary library;
+    private final Artist artist;
+    private final HashSet<Song> songs;
+    private final HashSet<Release> releases;
 
     private final int NUM_SPACES = 5;
 
@@ -30,26 +26,6 @@ public class BrowsingArtist extends Mode {
         this.artist = artist;
 
         listContent();
-    }
-
-    private String formatDuration(int ms) {
-        int remainingMS = ms;
-
-        int hours = Math.floorDiv(remainingMS, MS_IN_HOUR);
-        remainingMS -= hours * MS_IN_HOUR;
-        int minutes = Math.floorDiv(remainingMS, MS_IN_MINUTE);
-        remainingMS -= minutes * MS_IN_MINUTE;
-        int seconds = Math.floorDiv(remainingMS, MS_IN_SECOND);
-        remainingMS -= seconds * MS_IN_SECOND;
-        int milliseconds = remainingMS;
-
-        String duration = minutes + "m " + seconds + "s " + milliseconds + "ms";
-
-        if (hours > 0) {
-            duration = hours + "h " + duration;
-        }
-
-        return duration;
     }
 
     private void outputArtistName() {
@@ -75,24 +51,27 @@ public class BrowsingArtist extends Mode {
     private void outputSong(Song song) {
         CommandLineInterface commandLineInterface = this.getCommandLineInterface();
         String title = song.getTitle();
-        String duration = formatDuration(song.getDuration());
+        String duration = Formatter.formatDuration(song.getDuration());
         String rating = song.getRating() + "";
+        String GUID = song.getGUID();
 
         commandLineInterface.outputMessage(title);
+        commandLineInterface.outputMessage("\tGUID: " + GUID);
         commandLineInterface.outputMessage("\tDuration: " + duration);
-        commandLineInterface.outputMessage("Rating: " + rating + " / 5 stars");
+        commandLineInterface.outputMessage("\tRating: " + rating + " / 5 stars");
     }
 
     private void outputRelease(Release release) {
         CommandLineInterface commandLineInterface = this.getCommandLineInterface();
         String title = release.getTitle();
         String date = release.getIssueDate().toString();
-        //TODO: Add media??? maybe it means medium...
         String medium = release.getMedium();
         String averageRating = release.getRating() + "";
-        String duration = formatDuration(release.getDuration());
+        String duration = Formatter.formatDuration(release.getDuration());
+        String GUID = release.getGUID();
 
         commandLineInterface.outputMessage(title);
+        commandLineInterface.outputMessage("\tGUID: " + GUID);
         commandLineInterface.outputMessage("\tIssue Date: " + date);
         commandLineInterface.outputMessage("\tMedium: " + medium);
         commandLineInterface.outputMessage("\tAverage Rating: " + averageRating + " / 5 stars");
@@ -157,11 +136,10 @@ public class BrowsingArtist extends Mode {
         } else if (command.equals("help")) {
             listCommands();
         } else if (command.equals("esc")) {
-            commandLineInterface.setMode(new DefaultMode(commandLineInterface));
+            commandLineInterface.setMode(new ChoosingArtist(commandLineInterface));
         } else if (command.equals("quit")) {
             commandLineInterface.quit();
         } else {
-            // TODO: go to release
             Release found = null;
             input = input.toLowerCase();
 
