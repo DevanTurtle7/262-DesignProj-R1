@@ -7,14 +7,15 @@ import com.opencsv.RFC4180ParserBuilder;
 import com.swen262.Artist;
 import com.swen262.Release;
 import com.swen262.Song;
+import jdk.jfr.DataAmount;
 
 import java.io.FileReader;
-import java.io.StringReader;
-import java.net.URL;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.LinkedHashSet;
+import java.util.LinkedList;
 // Used linkedhashset per time complexity table here: https://gist.github.com/psayre23/c30a821239f4818b0709
 
 /**
@@ -25,18 +26,32 @@ public class Database {
     private LinkedHashSet<Song> songs;
     private LinkedHashSet<Release> releases;
     private LinkedHashSet<Artist> artists;
+    private HashMap<Song, Release> songsToRelease;
 
     private final String SONG_CSV_PATH = getClass().getResource("./data/songs.csv").getPath();
     private final String ARTISTS_CSV_PATH = getClass().getResource("./data/artists.csv").getPath();
     private final String RELEASES_CSV_PATH = getClass().getResource("./data/releases.csv").getPath();
 
+    private static Database activeInstance;
+
     public Database(){
+        activeInstance = this;
+
         artists = new LinkedHashSet<>();
         releases = new LinkedHashSet<>();
         songs = new LinkedHashSet<>();
 
+        songsToRelease = new HashMap<>();
         System.out.println("Initializing the market's finest music database!");
         CSVParser();
+    }
+
+    public static Database getActiveInstance() {
+        if (activeInstance == null) {
+            return new Database();
+        } else {
+            return activeInstance;
+        }
     }
 
     public LinkedHashSet<Artist> getArtists(){
@@ -68,6 +83,7 @@ public class Database {
             while ((song_csv_record = song_csv_reader.readNext()) != null){
                 Song curSong = songParser(song_csv_record);
                 songs.add(curSong);
+                songsToRelease.put(curSong, null);
             }
 
             CSVReader release_csv_reader = new CSVReaderBuilder(new FileReader(RELEASES_CSV_PATH)).withCSVParser(rfcDoubleParse).build();
@@ -118,22 +134,27 @@ public class Database {
         //System.out.println(issue_date);
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         Date iss_date;
-        LinkedHashSet<Song> tracks = new LinkedHashSet<>();
-        String track;
+        LinkedList<Song> tracks = new LinkedList<>();
         for (int i = 5; i < length ; i++) {
-            track = release_attributes[i];
+            String trackGUID = release_attributes[i];
             //System.out.println(track);
-            tracks.add(searchSongByGUID(track));
+            Song track = searchSongByGUID(trackGUID);
+            tracks.add(track);
         }
         try{
             iss_date = formatter.parse(issue_date);
-            return new Release(iss_date,title,artist,medium,tracks,release_guid);
+            Release release = new Release(iss_date,title,artist,medium,tracks,release_guid);
+
+            for (Song song : tracks) {
+                songsToRelease.replace(song, release);
+            }
+
+            return release;
         } catch (ParseException e){
             System.out.println("ohno error");
             e.getMessage();
         }
         return null;
-
     }
 
     public Release searchReleaseByGUID(String GUID){
@@ -164,5 +185,11 @@ public class Database {
         return null;
     }
 
+    public Release getSongRelease(Song song) {
+        return songsToRelease.get(song);
+    }
 
+    public boolean isASingle(Song song) {
+        return songsToRelease.get(song) == null;
+    }
 }

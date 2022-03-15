@@ -1,6 +1,5 @@
 package com.swen262.commandLine;
 
-import com.swen262.Release;
 import com.swen262.Song;
 import com.swen262.personalLibrary.*;
 
@@ -8,39 +7,31 @@ import java.util.Scanner;
 
 public class CommandLineInterface {
 
-    private Action addSongAction;
-    private Action removeSongAction;
-    private Action addReleaseAction;
-    private Action removeReleaseAction;
+    private Action addByGUIDAction;
+    private Action removeByGUIDAction;
+    private RateByGUID rateByGUIDAction;
     private PersonalLibrary library;
 
     private Mode currentMode;
 
-    public CommandLineInterface() {
-        library = PersonalLibrary.loadPersonalLibrary();
+    private boolean running;
 
-        addSongAction = new AddSong(library);
-        removeSongAction = new RemoveSong(library);
-        addReleaseAction = new AddRelease(library);
-        removeReleaseAction = new RemoveRelease(library);
+    public CommandLineInterface() {
+        addByGUIDAction = new AddByGUID();
+        removeByGUIDAction = new RemoveByGUID();
+        rateByGUIDAction = new RateByGUID();
 
         currentMode = new DefaultMode(this);
+
+        running = true;
     }
 
-    protected void addSong(Song song) {
-        addSongAction.performAction(song);
+    protected void addByGUID(String GUID) throws Exception {
+        addByGUIDAction.performAction(GUID);
     }
 
-    protected void removeSong(Song song) {
-        removeSongAction.performAction(song);
-    }
-
-    protected void addRelease(Release release) {
-        addReleaseAction.performAction(release);
-    }
-
-    protected void removeRelease(Release release) {
-        removeReleaseAction.performAction(release);
+    protected void removeByGUID(String GUID) throws Exception {
+        removeByGUIDAction.performAction(GUID);
     }
 
     protected void outputMessage(String message) {
@@ -51,13 +42,30 @@ public class CommandLineInterface {
         currentMode.handleInput(input);
     }
 
+    protected void quit() {
+        running = false;
+    }
+
+    protected void setMode(Mode newMode) {
+        this.currentMode = newMode;
+    }
+
+    protected void rateByGUID(String GUID, int rating) throws Exception {
+        rateByGUIDAction.setRating(rating);
+        rateByGUIDAction.performAction(GUID);
+    }
+
     public void run() {
         Scanner scanner = new Scanner(System.in);
         String input = " ";
 
-        while (!input.equals("")) {
+        while (running) {
+            System.out.print(">> ");
+
             input = scanner.nextLine();
             input = input.strip();
+            input = input.toLowerCase();
+
             handleInput(input);
         }
     }

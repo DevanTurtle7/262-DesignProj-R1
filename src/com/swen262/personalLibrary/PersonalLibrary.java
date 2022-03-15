@@ -1,9 +1,12 @@
 package com.swen262.personalLibrary;
 
 import com.swen262.Artist;
+import com.swen262.Main;
 import com.swen262.Release;
 import com.swen262.Song;
+import com.swen262.database.Database;
 
+import javax.xml.crypto.Data;
 import java.util.HashSet;
 import java.util.LinkedList;
 
@@ -11,19 +14,26 @@ public class PersonalLibrary {
     private LinkedList<Song> songs;
     private LinkedList<Release> releases;
 
+    private static PersonalLibrary activeInstance;
+
     public PersonalLibrary(LinkedList<Song> songs, LinkedList<Release> releases){
+        activeInstance = this;
         this.songs = songs;
         this.releases = releases;
     }
 
-    public PersonalLibrary(){
-        this(new LinkedList<>(), new LinkedList<>());
+    public static PersonalLibrary getActiveInstance() {
+        if (activeInstance == null) {
+            // TODO: Load a personal library if it exists. otherwise create a new one
+
+            return new PersonalLibrary();
+        } else {
+            return activeInstance;
+        }
     }
 
-    public static PersonalLibrary loadPersonalLibrary() {
-        // TODO: Load a personal library if it exists. otherwise create a new one
-
-        return new PersonalLibrary();
+    public PersonalLibrary(){
+        this(new LinkedList<>(), new LinkedList<>());
     }
 
     public LinkedList<Song> getSongs(){
@@ -47,27 +57,68 @@ public class PersonalLibrary {
         return artists;
     }
 
-    public void addSong(Song song){
+    protected void addSong(Song song){
         if(!songs.contains(song)){
             songs.add(song);
         }
     }
 
-    public void removeSong(Song song){
+    protected void removeSong(Song song){
         if(songs.contains(song)){
             songs.remove(song);
         }
     }
 
-    public void addRelease(Release release){
+    protected void addRelease(Release release){
         if(!releases.contains(release)){
             releases.add(release);
         }
     }
 
-    public void removeRelease(Release release){
+    protected void removeRelease(Release release){
         if(releases.contains(release)){
             releases.remove(release);
         }
+    }
+
+    public int getSongCount() {
+        return songs.size();
+    }
+
+    public int getReleaseCount() {return releases.size();}
+
+    public HashSet<Song> getSongsFromArtist(Artist artist) {
+        HashSet<Song> songsFromArtist = new HashSet<>();
+        Database database = Database.getActiveInstance();
+
+        for (Song song : songs) {
+            if (song.getArtist() == artist) {
+                if (database.isASingle(song)) {
+                    songsFromArtist.add(song);
+                }
+            }
+        }
+
+        return songsFromArtist;
+    }
+
+    public HashSet<Release> getReleasesFromArtist(Artist artist) {
+        HashSet<Release> releasesFromArtist = new HashSet<>();
+        Database database = Database.getActiveInstance();
+
+        for (Song song : songs) {
+            if (song.getArtist() == artist) {
+                if (!database.isASingle(song)) {
+                    Release release = database.getSongRelease(song);
+                    releasesFromArtist.add(release);
+                }
+            }
+        }
+
+        for (Release release : releases) {
+            releasesFromArtist.add(release);
+        }
+
+        return releasesFromArtist;
     }
 }

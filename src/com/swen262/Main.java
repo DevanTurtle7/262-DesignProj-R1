@@ -3,14 +3,12 @@ package com.swen262;
 import com.swen262.database.Database;
 
 import com.swen262.commandLine.CommandLineInterface;
+import com.swen262.personalLibrary.PersonalLibrary;
 
 public class Main {
-
-    private static Database db;
-
     public static void main(String[] args) {
-        db = new Database();
-
+        Database db = Database.getActiveInstance();
+        PersonalLibrary library = PersonalLibrary.getActiveInstance();
         CommandLineInterface cli = new CommandLineInterface();
         cli.run();
     }
