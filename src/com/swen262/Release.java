@@ -40,10 +40,6 @@ public class Release implements Comparable<Release>{
         return Math.round(totalRate / tracks.size());
     }
 
-    public int getDuration() {
-        return duration;
-    }
-
     public Date getIssueDate(){
         return this.issueDate;
     }
