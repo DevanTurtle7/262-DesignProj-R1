@@ -6,6 +6,9 @@ import com.swen262.model.Song;
 
 import java.util.LinkedList;
 
+/**
+ * Searches the DB for Releases that have a Song with a matching GUID with the query
+ */
 public class SearchReleaseByTrackGUID implements DBSearcher<Release> {
 
     @Override

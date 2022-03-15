@@ -8,6 +8,10 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.LinkedList;
 
+/**
+ * Searches the DB for Releases that were produced 
+ * between a date range specified in the query
+ */
 public class SearchReleaseByDateRange implements DBSearcher<Release> {
 
     @Override

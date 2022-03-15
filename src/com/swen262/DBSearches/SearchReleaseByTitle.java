@@ -4,8 +4,10 @@ import com.swen262.database.Database;
 import com.swen262.model.Release;
 
 import java.util.LinkedList;
-import java.util.Locale;
 
+/**
+ * Searches the DB for Releases that have a title susbstring matching the query
+ */
 public class SearchReleaseByTitle implements DBSearcher<Release> {
 
     @Override

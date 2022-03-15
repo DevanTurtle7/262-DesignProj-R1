@@ -5,6 +5,9 @@ import com.swen262.model.Release;
 
 import java.util.LinkedList;
 
+/**
+ * Searches the DB for Releases with an Artist GUID matching the query
+ */
 public class SearchReleaseByArtistGUID implements DBSearcher<Release> {
 
     @Override
