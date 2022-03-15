@@ -10,6 +10,7 @@ import com.swen262.model.Artist;
 import com.swen262.model.Release;
 import com.swen262.model.Song;
 
+import javax.xml.crypto.Data;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
@@ -96,14 +97,15 @@ public class PersonalLibrary {
 
     private static Artist artistParser(String[] artist_attributes) {
         String guid = artist_attributes[3];
-        String name = artist_attributes[0];
-        String rtstr = artist_attributes[2];
-        int rating = 0;
-        if (rtstr.length() > 0) {
-            rating = Integer.parseInt(rtstr);
+        Database database = Database.getActiveInstance();
+
+        for (Artist artist : database.getArtists()) {
+            if (artist.getGUID().equals(guid)) {
+                return artist;
+            }
         }
-        String type = artist_attributes[1];
-        return new Artist(name, type, rating, guid);
+
+        return null;
     }
 
     public static Artist searchArtistByGUID(String GUID) {
@@ -116,14 +118,16 @@ public class PersonalLibrary {
     }
 
     private static Song songParser(String[] song_attributes) {
-
-        String title = song_attributes[0];
-        String artist_guid = song_attributes[1];
-        Artist artist = searchArtistByGUID(artist_guid);
-        int duration = Integer.parseInt(song_attributes[2]);
-        int rating = Integer.parseInt(song_attributes[3]);
         String song_guid = song_attributes[4];
-        return new Song(title, artist, duration, rating, song_guid);
+        Database database = Database.getActiveInstance();
+
+        for (Song song : database.getSongs()) {
+            if (song.getGUID().equals(song_guid)) {
+                return song;
+            }
+        }
+
+        return null;
     }
 
     private static Song searchSongByGUID(String GUID) {
@@ -136,44 +140,15 @@ public class PersonalLibrary {
     }
 
     private static Release releaseParser(String[] release_attributes) {
-        int length = release_attributes.length;
-        String issue_date = release_attributes[0];
-        String title = release_attributes[1];
-        String artist_guid = release_attributes[2];
-        Artist artist = searchArtistByGUID(artist_guid);
-        String medium = release_attributes[3];
         String release_guid = release_attributes[4];
-        //System.out.println("Original issue date: "+issue_date);
+        Database database = Database.getActiveInstance();
 
-        if (issue_date.matches("^\\d\\d\\d\\d$")) {
-            issue_date += "-01-01";
-        }
-        if (issue_date.matches("^\\d\\d\\d\\d-\\d\\d$")) {
-            issue_date += "-01";
-        }
-        //System.out.println(issue_date);
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-        Date iss_date;
-        LinkedList<Song> tracks = new LinkedList<>();
-        for (int i = 5; i < length; i++) {
-            String trackGUID = release_attributes[i];
-            //System.out.println(track);
-            Song track = searchSongByGUID(trackGUID);
-            tracks.add(track);
-        }
-        try {
-            iss_date = formatter.parse(issue_date);
-            Release release = new Release(iss_date, title, artist, medium, tracks, release_guid);
-
-            for (Song song : tracks) {
-                songsToRelease.replace(song, release);
+        for (Release release : database.getReleases()) {
+            if (release.getGUID().equals(release_guid)) {
+                return release;
             }
-
-            return release;
-        } catch (ParseException e) {
-            System.out.println("ohno error");
-            e.printStackTrace();
         }
+
         return null;
     }
 
