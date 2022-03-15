@@ -16,7 +16,16 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.LinkedList;
 
+/**
+ * Inherits from Action. Concrete Command.
+ */
 public class SaveLibrary implements Action {
+
+    /**
+     * Saves the current library to csv files
+     * @param o Generic Java Object - in this case, should be Library instance
+     * @throws Exception
+     */
     @Override
     public void performAction(Object o) throws Exception {
         if (o instanceof PersonalLibrary) {

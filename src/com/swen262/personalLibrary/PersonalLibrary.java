@@ -22,6 +22,10 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
 
+/**
+ * Internal representation of the user's music library
+ * Reciever in Command Pattern
+ */
 public class PersonalLibrary {
     private static HashSet<Artist> artists;
     private final LinkedList<Song> songs;
@@ -31,6 +35,12 @@ public class PersonalLibrary {
 
     private static PersonalLibrary activeInstance;
 
+    /**
+     * Constructor for library
+     * @param songs List of songs
+     * @param releases List of releases
+     * @param artists List of artists
+     */
     public PersonalLibrary(LinkedList<Song> songs, LinkedList<Release> releases, HashSet<Artist> artists) {
         activeInstance = this;
         this.songs = songs;
@@ -40,6 +50,10 @@ public class PersonalLibrary {
         this.datesAdded = new HashMap<>();
     }
 
+    /**
+     * Creates and persists the active instance of the library
+     * @return Constructed PersonalLibrary object
+     */
     public static PersonalLibrary getActiveInstance() {
         if (activeInstance == null) {
             try {
@@ -95,6 +109,11 @@ public class PersonalLibrary {
         return null;
     }
 
+    /**
+     * Gets GUID from csv and returns valid artist from database
+     * @param artist_attributes String array from csv
+     * @return Valid Artist Object
+     */
     private static Artist artistParser(String[] artist_attributes) {
         String guid = artist_attributes[3];
         Database database = Database.getActiveInstance();
@@ -108,6 +127,11 @@ public class PersonalLibrary {
         return null;
     }
 
+    /**
+     * Returns artist object if GUID matches
+     * @param GUID unique identifier for artist
+     * @return artist object that has the GUID
+     */
     public static Artist searchArtistByGUID(String GUID) {
         for (Artist artist : artists) {
             if (GUID.equals(artist.getGUID())) {
@@ -117,6 +141,11 @@ public class PersonalLibrary {
         return null;
     }
 
+    /**
+     * Gets GUID from csv and returns valid song from database
+     * @param song_attributes String array from csv
+     * @return Valid Song Object
+     */
     private static Song songParser(String[] song_attributes) {
         String song_guid = song_attributes[4];
         Database database = Database.getActiveInstance();
@@ -130,6 +159,11 @@ public class PersonalLibrary {
         return null;
     }
 
+    /**
+     * Returns song object if GUID matches
+     * @param GUID unique identifier for song
+     * @return song object that has the GUID
+     */
     private static Song searchSongByGUID(String GUID) {
         for (Song song : getActiveInstance().songs) {
             if (GUID.equals(song.getGUID())) {
@@ -139,6 +173,11 @@ public class PersonalLibrary {
         return null;
     }
 
+    /**
+     * Gets GUID from csv and returns valid release from database
+     * @param release_attributes String array from csv
+     * @return Valid Release Object
+     */
     private static Release releaseParser(String[] release_attributes) {
         String release_guid = release_attributes[4];
         Database database = Database.getActiveInstance();
@@ -152,6 +191,7 @@ public class PersonalLibrary {
         return null;
     }
 
+    // alternate constructor if no file is found
     public PersonalLibrary() {
         this(new LinkedList<>(), new LinkedList<>(), new HashSet<>());
     }
@@ -164,7 +204,10 @@ public class PersonalLibrary {
         return this.releases;
     }
 
-
+    /**
+     * Searches songs and releases for artists
+     * @return Valid Artist Object
+     */
     public HashSet<Artist> getArtists() {
         HashSet<Artist> artists = new HashSet<>();
         for (Song song : songs) {
@@ -179,6 +222,7 @@ public class PersonalLibrary {
         return artists;
     }
 
+    // if song not in list, add song. Then, add date.
     protected void addSong(Song song, LocalDate date) {
         if (!songs.contains(song)) {
             songs.add(song);
@@ -208,6 +252,11 @@ public class PersonalLibrary {
         return releases.size();
     }
 
+    /**
+     * Gets all songs that artist has made
+     * @param artist Valid Artist Object
+     * @return Set of songs artist has made
+     */
     public HashSet<Song> getSongsFromArtist(Artist artist) {
         HashSet<Song> songsFromArtist = new HashSet<>();
         Database database = Database.getActiveInstance();
@@ -223,6 +272,11 @@ public class PersonalLibrary {
         return songsFromArtist;
     }
 
+    /**
+     * Gets all releases that artist has made
+     * @param artist Valid Artist Object
+     * @return Set of releases artist has made
+     */
     public HashSet<Release> getReleasesFromArtist(Artist artist) {
         HashSet<Release> releasesFromArtist = new HashSet<>();
         Database database = Database.getActiveInstance();
@@ -243,6 +297,11 @@ public class PersonalLibrary {
         return releasesFromArtist;
     }
 
+    /**
+     * Gets total duration of all songs artist has made
+     * @param artist Valid Artist object
+     * @return Cumulative duration from songs and releases
+     */
     public int getDurationFromArtist(Artist artist) {
         int duration = 0;
 

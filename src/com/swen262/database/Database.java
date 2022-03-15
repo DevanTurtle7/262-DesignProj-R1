@@ -33,6 +33,9 @@ public class Database {
 
     private static Database activeInstance;
 
+    /**
+     * Constructor for database
+     */
     public Database() {
         activeInstance = this;
 
@@ -45,6 +48,10 @@ public class Database {
         CSVParser();
     }
 
+    /**
+     * Gets current database system is using
+     * @return active database
+     */
     public static Database getActiveInstance() {
         if (activeInstance == null) {
             return new Database();
@@ -65,6 +72,9 @@ public class Database {
         return songs;
     }
 
+    /**
+     * Parses CSVs given on website using RFC-compliant parser
+     */
     private void CSVParser() {
         try {
             RFC4180Parser rfcParse = new RFC4180ParserBuilder().withQuoteChar('\'').build();
@@ -99,6 +109,11 @@ public class Database {
         }
     }
 
+    /**
+     * Parses artist from csv and creates object
+     * @param artist_attributes Array of strings from CSV
+     * @return Artist object to add to internal db
+     */
     private Artist artistParser(String[] artist_attributes) {
         String guid = artist_attributes[0];
         String name = artist_attributes[1];
@@ -106,6 +121,11 @@ public class Database {
         return new Artist(guid, name, type);
     }
 
+    /**
+     * Returns artist object if GUID matches
+     * @param GUID unique identifier for artist
+     * @return artist object that has the GUID
+     */
     public Artist searchArtistByGUID(String GUID) {
         for (Artist artist : artists) {
             if (GUID.equals(artist.getGUID())) {
@@ -115,6 +135,11 @@ public class Database {
         return null;
     }
 
+    /**
+     * Parses release from CSV and creates a valid object
+     * @param release_attributes String Array from CSV
+     * @return valid Release object
+     */
     private Release releaseParser(String[] release_attributes) {
         int length = release_attributes.length;
         String release_guid = release_attributes[0];
@@ -159,6 +184,11 @@ public class Database {
         return null;
     }
 
+    /**
+     * Searches releases for release with matching GUID
+     * @param GUID Unique identifier for release
+     * @return Release object with matching GUID
+     */
     public Release searchReleaseByGUID(String GUID) {
         for (Release release : releases) {
             if (GUID.equals(release.getGUID())) {
@@ -168,6 +198,11 @@ public class Database {
         return null;
     }
 
+    /**
+     * Parses song from CSV and makes valid Song object
+     * @param song_attributes String array from CSVParser
+     * @return valid Song object
+     */
     private Song songParser(String[] song_attributes) {
 
         String song_guid = song_attributes[0];
@@ -178,6 +213,11 @@ public class Database {
         return new Song(title, artist, duration, song_guid);
     }
 
+    /**
+     * Searches song for release with matching GUID
+     * @param GUID Unique identifier for song
+     * @return Song object with matching GUID
+     */
     public Song searchSongByGUID(String GUID) {
         for (Song song : songs) {
             if (GUID.equals(song.getGUID())) {
