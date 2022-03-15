@@ -13,7 +13,8 @@ public class CommandLineInterface {
     private final AddByGUID addByGUIDAction;
     private final Action removeByGUIDAction;
     private final RateByGUID rateByGUIDAction;
-    private PersonalLibrary library;
+    private final Action saveLibraryAction;
+    private final PersonalLibrary library;
 
     private Mode currentMode;
     private DBSongSearcher dbSearchStrategy;
@@ -25,6 +26,8 @@ public class CommandLineInterface {
         addByGUIDAction = new AddByGUID();
         removeByGUIDAction = new RemoveByGUID();
         rateByGUIDAction = new RateByGUID();
+        saveLibraryAction = new SaveLibrary();
+        library = PersonalLibrary.getActiveInstance();
 
         currentMode = new DefaultMode(this);
 
@@ -34,6 +37,10 @@ public class CommandLineInterface {
         outputMessage("            Welcome to           ");
         outputMessage("  The Muze Music Library System  ");
         outputMessage("=================================\n");
+    }
+
+    protected void saveLibrary() throws Exception {
+        saveLibraryAction.performAction(library);
     }
 
     protected void setDBSearchStrategy(DBSongSearcher strategy) {

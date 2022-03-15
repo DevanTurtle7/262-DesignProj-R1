@@ -96,6 +96,8 @@ public class DefaultMode extends Mode {
                 "   Rates a song",
                 "   [guid]: The GUID of the song you want to rate",
                 "   [rating]: The rating you want to give the song. An integer between 1 and 5.",
+                "save",
+                "   Saves library in it's current state.",
                 "browse",
                 "   Enters into browsing mode. Displays your personal library.",
                 "quit",
@@ -336,6 +338,12 @@ public class DefaultMode extends Mode {
                 }
             } catch (GUIDNotFoundException e) {
                 commandLineInterface.outputMessage("Error rating song. Could not find song with matching GUID.");
+            } catch (Exception e) {
+                commandLineInterface.outputMessage("Something went wrong.");
+            }
+        } else if (command.equals("save")) {
+            try {
+                commandLineInterface.saveLibrary();
             } catch (Exception e) {
                 commandLineInterface.outputMessage("Something went wrong.");
             }

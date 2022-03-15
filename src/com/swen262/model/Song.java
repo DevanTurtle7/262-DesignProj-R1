@@ -1,8 +1,5 @@
 package com.swen262.model;
 
-import java.time.LocalDate;
-import java.util.Date;
-
 public class Song implements Comparable<Song> {
     private final String title;
     private final Artist artist;

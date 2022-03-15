@@ -1,2 +1,2 @@
 javac -classpath commons-cli-1.5.0.jar:commons-lang3-3.12.0.jar:opencsv-5.6.jar -d bin src/com/swen262/*.java
-java -classpath commons-cli-1.5.0.jar:commons-lang3-3.12.0.jar:opencsv-5.6.jar:bin com.swen262.Main -artists csvfiles/artists.csv -releases csvfiles/releases.csv -songs csvfiles/songs.csv
+java -classpath commons-cli-1.5.0.jar:commons-lang3-3.12.0.jar:opencsv-5.6.jar:bin com.swen262.Main
