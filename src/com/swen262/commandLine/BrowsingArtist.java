@@ -4,6 +4,7 @@ import com.swen262.Artist;
 import com.swen262.Release;
 import com.swen262.Song;
 import com.swen262.personalLibrary.PersonalLibrary;
+import com.swen262.util.Formatter;
 
 import java.util.HashSet;
 import java.util.Locale;
@@ -13,10 +14,6 @@ public class BrowsingArtist extends Mode {
     private Artist artist;
     private HashSet<Song> songs;
     private HashSet<Release> releases;
-
-    private final int MS_IN_HOUR = 3600000;
-    private final int MS_IN_MINUTE = 60000;
-    private final int MS_IN_SECOND = 1000;
 
     private final int NUM_SPACES = 5;
 
@@ -30,26 +27,6 @@ public class BrowsingArtist extends Mode {
         this.artist = artist;
 
         listContent();
-    }
-
-    private String formatDuration(int ms) {
-        int remainingMS = ms;
-
-        int hours = Math.floorDiv(remainingMS, MS_IN_HOUR);
-        remainingMS -= hours * MS_IN_HOUR;
-        int minutes = Math.floorDiv(remainingMS, MS_IN_MINUTE);
-        remainingMS -= minutes * MS_IN_MINUTE;
-        int seconds = Math.floorDiv(remainingMS, MS_IN_SECOND);
-        remainingMS -= seconds * MS_IN_SECOND;
-        int milliseconds = remainingMS;
-
-        String duration = minutes + "m " + seconds + "s " + milliseconds + "ms";
-
-        if (hours > 0) {
-            duration = hours + "h " + duration;
-        }
-
-        return duration;
     }
 
     private void outputArtistName() {
@@ -75,7 +52,7 @@ public class BrowsingArtist extends Mode {
     private void outputSong(Song song) {
         CommandLineInterface commandLineInterface = this.getCommandLineInterface();
         String title = song.getTitle();
-        String duration = formatDuration(song.getDuration());
+        String duration = Formatter.formatDuration(song.getDuration());
         String rating = song.getRating() + "";
         String GUID = song.getGUID();
 
@@ -91,7 +68,7 @@ public class BrowsingArtist extends Mode {
         String date = release.getIssueDate().toString();
         String medium = release.getMedium();
         String averageRating = release.getRating() + "";
-        String duration = formatDuration(release.getDuration());
+        String duration = Formatter.formatDuration(release.getDuration());
         String GUID = release.getGUID();
 
         commandLineInterface.outputMessage(title);

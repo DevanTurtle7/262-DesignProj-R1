@@ -121,4 +121,16 @@ public class PersonalLibrary {
 
         return releasesFromArtist;
     }
+
+    public int getDurationFromArtist(Artist artist) {
+        int duration = 0;
+
+        for (Song song : songs) {
+            if (song.getArtist() == artist) {
+                duration += song.getDuration();
+            }
+        }
+
+        return duration;
+    }
 }
