@@ -87,7 +87,6 @@ public class BrowsingArtist extends Mode {
         CommandLineInterface commandLineInterface = this.getCommandLineInterface();
         String title = release.getTitle();
         String date = release.getIssueDate().toString();
-        //TODO: Add media??? maybe it means medium...
         String medium = release.getMedium();
         String averageRating = release.getRating() + "";
         String duration = formatDuration(release.getDuration());
@@ -161,7 +160,6 @@ public class BrowsingArtist extends Mode {
         } else if (command.equals("quit")) {
             commandLineInterface.quit();
         } else {
-            // TODO: go to release
             Release found = null;
             input = input.toLowerCase();
 

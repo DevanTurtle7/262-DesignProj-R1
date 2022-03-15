@@ -15,6 +15,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashSet;
+import java.util.LinkedList;
 // Used linkedhashset per time complexity table here: https://gist.github.com/psayre23/c30a821239f4818b0709
 
 /**
@@ -133,7 +134,7 @@ public class Database {
         //System.out.println(issue_date);
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         Date iss_date;
-        LinkedHashSet<Song> tracks = new LinkedHashSet<>();
+        LinkedList<Song> tracks = new LinkedList<>();
         for (int i = 5; i < length ; i++) {
             String trackGUID = release_attributes[i];
             //System.out.println(track);

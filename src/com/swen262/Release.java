@@ -2,6 +2,7 @@ package com.swen262;
 
 import java.util.Date;
 import java.util.LinkedHashSet;
+import java.util.LinkedList;
 
 public class Release {
     private Date issueDate;
@@ -10,9 +11,9 @@ public class Release {
     private int rating;
     private String GUID;
     private String medium;
-    private LinkedHashSet<Song> tracks;
+    private LinkedList<Song> tracks;
 
-    public Release(Date issueDate, String title, Artist artist, String medium, LinkedHashSet<Song> tracks, String GUID){
+    public Release(Date issueDate, String title, Artist artist, String medium, LinkedList<Song> tracks, String GUID){
         this.issueDate = issueDate;
         this.title = title;
         this.artist = artist;
@@ -22,7 +23,7 @@ public class Release {
         this.GUID = GUID;
     }
 
-    public Release(String title, Artist artist, String medium, LinkedHashSet<Song> tracks, String GUID){
+    public Release(String title, Artist artist, String medium, LinkedList<Song> tracks, String GUID){
         this(new Date(), title, artist, medium, tracks, GUID);
         
     }
@@ -59,7 +60,7 @@ public class Release {
         return this.medium;
     }
 
-    public LinkedHashSet<Song> getTracks(){
+    public LinkedList<Song> getTracks(){
         return this.tracks;
     }
 
