@@ -29,6 +29,11 @@ public class CommandLineInterface {
         currentMode = new DefaultMode(this);
 
         running = true;
+
+        outputMessage("\n=================================");
+        outputMessage("            Welcome to           ");
+        outputMessage("  The Muze Music Library System  ");
+        outputMessage("=================================\n");
     }
 
     protected void setDBSearchStrategy(DBSongSearcher strategy) {
