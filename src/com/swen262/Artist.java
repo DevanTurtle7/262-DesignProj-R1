@@ -1,6 +1,6 @@
 package com.swen262;
 
-public class Artist {
+public class Artist implements Comparable<Artist>{
     private String GUID;
     private String name;
     private String type;
@@ -36,5 +36,28 @@ public class Artist {
     @Override
     public String toString(){
         return (name + ", type: " + type + ", rating: " + rating);
+    }
+
+    @Override
+    //Credit https://www.geeksforgeeks.org/compare-two-strings-in-java/
+    public int compareTo(Artist o) {
+        int l1 = name.length();
+        int l2 = o.name.length();
+        int lmin = Math.min(l1, l2);
+  
+        for (int i = 0; i < lmin; i++) {
+            int str1_ch = (int)name.charAt(i);
+            int str2_ch = (int)o.name.charAt(i);
+  
+            if (str1_ch != str2_ch) {
+                return str1_ch - str2_ch;
+            }
+        }
+        if (l1 != l2) {
+            return l1 - l2;
+        }
+        else {
+            return 0;
+        }
     }
 }

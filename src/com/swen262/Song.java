@@ -1,11 +1,12 @@
 package com.swen262;
 
-public class Song {
+public class Song implements Comparable<Song>{
     private String title;
     private Artist artist;
     private int duration;
     private int rating;
     private String GUID;
+    private Release release;
 
     public Song(String title, Artist artist, int duration, int rating, String GUID){
         this.GUID = GUID;
@@ -21,6 +22,14 @@ public class Song {
 
     public String getTitle(){
         return this.title;
+    }
+
+    public void setRelease(Release release){
+        this.release = release;
+    }
+
+    public Release getRelease() {
+        return release;
     }
 
     public Artist getArtist(){
@@ -50,5 +59,10 @@ public class Song {
     @Override
     public String toString(){
         return (title + ", by: " + artist.getName());
+    }
+
+    @Override
+    public int compareTo(Song o) {
+        return this.rating - o.rating;
     }
 }
