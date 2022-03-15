@@ -6,6 +6,10 @@ import com.swen262.personalLibrary.PersonalLibrary;
 import java.util.Collections;
 import java.util.LinkedList;
 
+/**
+ * Searches the PersonalLibrary for Songs
+ * with a title substring matching the query
+ */
 public class SearchSongByTitle implements LibrarySearcher<Song> {
 
     @Override

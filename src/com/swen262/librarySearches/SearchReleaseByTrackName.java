@@ -7,6 +7,10 @@ import com.swen262.personalLibrary.PersonalLibrary;
 import java.util.Collections;
 import java.util.LinkedList;
 
+/**
+ * Searches the PersonalLibrary for Releases
+ * with a Song name matching the query
+ */
 public class SearchReleaseByTrackName implements LibrarySearcher<Release> {
 
     @Override

@@ -6,6 +6,9 @@ import com.swen262.personalLibrary.PersonalLibrary;
 import java.util.Collections;
 import java.util.LinkedList;
 
+/**
+ * Searches the PersonalLibrary for Artists with a name substring that contains the query
+ */
 public class SearchArtistByName implements LibrarySearcher<Artist> {
 
     @Override

@@ -6,6 +6,10 @@ import com.swen262.personalLibrary.PersonalLibrary;
 import java.util.Collections;
 import java.util.LinkedList;
 
+/**
+ * Searches the PersonalLibrary for Songs
+ * with an Artist name matching the query
+ */
 public class SearchSongByArtistName implements LibrarySearcher<Song> {
 
     @Override

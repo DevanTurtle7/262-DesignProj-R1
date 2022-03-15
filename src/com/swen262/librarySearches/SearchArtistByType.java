@@ -6,6 +6,9 @@ import com.swen262.personalLibrary.PersonalLibrary;
 import java.util.Collections;
 import java.util.LinkedList;
 
+/**
+ * Searches the PersonalLibrary for Artists with a type matching the query
+ */
 public class SearchArtistByType implements LibrarySearcher<Artist> {
 
     @Override
