@@ -1,7 +1,7 @@
 package com.swen262.view;
 
-import com.swen262.DBSearches.DBSongSearcher;
-import com.swen262.librarySearches.LibrarySongSearcher;
+import com.swen262.DBSearches.DBSearcher;
+import com.swen262.librarySearches.LibrarySearcher;
 import com.swen262.personalLibrary.*;
 
 import java.time.LocalDate;
@@ -17,8 +17,8 @@ public class CommandLineInterface {
     private final PersonalLibrary library;
 
     private Mode currentMode;
-    private DBSongSearcher dbSearchStrategy;
-    private LibrarySongSearcher libSearchStrategy;
+    private DBSearcher dbSearchStrategy;
+    private LibrarySearcher libSearchStrategy;
 
     private boolean running;
 
@@ -43,11 +43,11 @@ public class CommandLineInterface {
         saveLibraryAction.performAction(library);
     }
 
-    protected void setDBSearchStrategy(DBSongSearcher strategy) {
+    protected void setDBSearchStrategy(DBSearcher strategy) {
         this.dbSearchStrategy = strategy;
     }
 
-    protected void setLibSearchStrategy(LibrarySongSearcher strategy) {
+    protected void setLibSearchStrategy(LibrarySearcher strategy) {
         this.libSearchStrategy = strategy;
     }
 

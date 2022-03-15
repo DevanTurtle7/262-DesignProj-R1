@@ -7,6 +7,6 @@ import java.util.LinkedList;
  * for searching of the PersonalLibrary for Artists, Releases, and Songs
  * given query information
  */
-public interface LibrarySongSearcher<E> {
+public interface LibrarySearcher<E> {
     LinkedList<E> algorithm(String query);
 }
