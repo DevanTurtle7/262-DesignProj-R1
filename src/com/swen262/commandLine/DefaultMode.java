@@ -56,7 +56,6 @@ public class DefaultMode extends Mode {
         String command = args[0];
         CommandLineInterface commandLineInterface = this.getCommandLineInterface();
 
-        // TODO: Add rating
         if (command.equals("searchlib")) {
 
         } else if (command.equals("searchdb")) {

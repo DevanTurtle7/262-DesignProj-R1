@@ -68,8 +68,10 @@ public class BrowsingRelease extends Mode {
         String title = song.getTitle();
         String duration = formatDuration(song.getDuration());
         String rating = song.getRating() + "";
+        String GUID = song.getGUID();
 
         commandLineInterface.outputMessage(index + ") " + title);
+        commandLineInterface.outputMessage("\tGUID: " + GUID);
         commandLineInterface.outputMessage("\tDuration: " + duration);
         commandLineInterface.outputMessage("\tRating: " + rating + " / 5 stars");
     }

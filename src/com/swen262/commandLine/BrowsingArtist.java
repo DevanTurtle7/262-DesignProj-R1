@@ -77,8 +77,10 @@ public class BrowsingArtist extends Mode {
         String title = song.getTitle();
         String duration = formatDuration(song.getDuration());
         String rating = song.getRating() + "";
+        String GUID = song.getGUID();
 
         commandLineInterface.outputMessage(title);
+        commandLineInterface.outputMessage("\tGUID: " + GUID);
         commandLineInterface.outputMessage("\tDuration: " + duration);
         commandLineInterface.outputMessage("\tRating: " + rating + " / 5 stars");
     }
@@ -90,8 +92,10 @@ public class BrowsingArtist extends Mode {
         String medium = release.getMedium();
         String averageRating = release.getRating() + "";
         String duration = formatDuration(release.getDuration());
+        String GUID = release.getGUID();
 
         commandLineInterface.outputMessage(title);
+        commandLineInterface.outputMessage("\tGUID: " + GUID);
         commandLineInterface.outputMessage("\tIssue Date: " + date);
         commandLineInterface.outputMessage("\tMedium: " + medium);
         commandLineInterface.outputMessage("\tAverage Rating: " + averageRating + " / 5 stars");
