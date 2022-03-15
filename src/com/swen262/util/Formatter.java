@@ -1,5 +1,7 @@
 /**
  * Provides formatters for text output
+ *
+ * @author Devan Kavalchek
  */
 
 package com.swen262.util;
