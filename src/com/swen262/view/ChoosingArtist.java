@@ -1,3 +1,10 @@
+/**
+ * A mode of the command line interface where all the artists that have songs or releases saved
+ * in the library are displays. The user can choose to browse an artist.
+ *
+ * @author Devan Kavalchek
+ */
+
 package com.swen262.view;
 
 import com.swen262.model.Artist;
@@ -12,9 +19,15 @@ public class ChoosingArtist extends Mode {
     private final HashMap<String, Artist> artistLibrary;
     private final PersonalLibrary library;
 
+    /**
+     * The constructor
+     *
+     * @param commandLineInterface The command line interface
+     */
     public ChoosingArtist(CommandLineInterface commandLineInterface) {
         super(commandLineInterface);
 
+        // Get all the artists in the library
         artistLibrary = new HashMap<>();
         library = PersonalLibrary.getActiveInstance();
         HashSet<Artist> artists = library.getArtists();
@@ -24,14 +37,20 @@ public class ChoosingArtist extends Mode {
             artistLibrary.put(lowercaseName, artist);
         }
 
+        // Display all the artists
         printArtists();
     }
 
+    /**
+     * Displays all the artists in the users library
+     */
     private void printArtists() {
         CommandLineInterface commandLineInterface = this.getCommandLineInterface();
         HashSet<Artist> artists = library.getArtists();
 
+        // Check that the library is not empty
         if (artists.size() > 0) {
+            // Display the header
             String[] header = {
                     "==========================",
                     "         ARTISTS          ",
@@ -42,12 +61,15 @@ public class ChoosingArtist extends Mode {
                 commandLineInterface.outputMessage(line);
             }
 
+            // Display each artist
             for (Artist artist : artists) {
+                // Get the artist data
                 String name = artist.getName();
                 String disambiguation = artist.getType();
                 int duration = library.getDurationFromArtist(artist);
 
-                commandLineInterface.outputMessage(artist.getName());
+                // Display the artist data
+                commandLineInterface.outputMessage(name);
                 commandLineInterface.outputMessage("\tType: " + disambiguation);
                 commandLineInterface.outputMessage("\tDuration of Songs: " + Formatter.formatDuration(duration));
             }
@@ -88,6 +110,7 @@ public class ChoosingArtist extends Mode {
         if (command.equals("ls")) {
             printArtists();
         } else if (command.equals("esc")) {
+            // Back out to the default page
             commandLineInterface.setMode(new DefaultMode(commandLineInterface));
         } else if (command.equals("quit")) {
             commandLineInterface.quit();
@@ -96,10 +119,13 @@ public class ChoosingArtist extends Mode {
         } else {
             String artistName = input.toLowerCase();
 
+            // Check if the users string matches any of the artists
             if (artistLibrary.containsKey(artistName)) {
                 Artist artist = artistLibrary.get(artistName);
+                // Browse that artist
                 commandLineInterface.setMode(new BrowsingArtist(commandLineInterface, artist));
             } else {
+                // User did not enter a valid artist name. The command is unknown.
                 this.unknownCommand();
             }
         }

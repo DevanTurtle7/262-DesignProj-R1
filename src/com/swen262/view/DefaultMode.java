@@ -1,3 +1,11 @@
+/**
+ * The default mode of the command line interface. Allows users to add, remove and rate songs
+ * or releases. Allows them to search the library or database. Allows them to browse
+ * their personal library.
+ *
+ * @author Devan Kavalchek
+ */
+
 package com.swen262.view;
 
 import com.swen262.DBSearches.SearchArtistByName;
@@ -23,12 +31,20 @@ public class DefaultMode extends Mode {
 
     private final PersonalLibrary library;
 
+    /**
+     * The constructor
+     * @param commandLineInterface The command line interface
+     */
     public DefaultMode(CommandLineInterface commandLineInterface) {
         super(commandLineInterface);
 
         library = PersonalLibrary.getActiveInstance();
     }
 
+    /**
+     * Displays a header for search results
+     * @param results
+     */
     private void printResultsHeader(LinkedList results) {
         CommandLineInterface commandLineInterface = this.getCommandLineInterface();
         int numResults = results.size();
@@ -36,33 +52,49 @@ public class DefaultMode extends Mode {
         if (numResults == 0) {
             commandLineInterface.outputMessage("No results found.");
         } else {
+            // Display the header
             commandLineInterface.outputMessage("Results (" + numResults + ")");
             commandLineInterface.outputMessage("---------------");
         }
     }
 
+    /**
+     * Displays the results of an artist search
+     * @param results The results of the search
+     */
     private void printArtistResults(LinkedList<Artist> results) {
         CommandLineInterface commandLineInterface = this.getCommandLineInterface();
         printResultsHeader(results);
 
+        // Print each artist
         for (Artist artist : results) {
             commandLineInterface.outputMessage(artist.getName() + " | GUID: " + artist.getGUID());
         }
     }
 
+    /**
+     * Displays the results of a release search
+     * @param results The results of the search
+     */
     private void printReleaseResults(LinkedList<Release> results) {
         CommandLineInterface commandLineInterface = this.getCommandLineInterface();
         printResultsHeader(results);
 
+        // Print each release
         for (Release release : results) {
             commandLineInterface.outputMessage(release.getTitle() + " | GUID: " + release.getGUID());
         }
     }
 
+    /**
+     * Displays the results of a song search
+     * @param results The results of the search
+     */
     private void printSongResults(LinkedList<Song> results) {
         CommandLineInterface commandLineInterface = this.getCommandLineInterface();
         printResultsHeader(results);
 
+        // Print each song
         for (Song song : results) {
             commandLineInterface.outputMessage(song.toString() + " | GUID: " + song.getGUID());
         }
@@ -116,13 +148,16 @@ public class DefaultMode extends Mode {
         CommandLineInterface commandLineInterface = this.getCommandLineInterface();
 
         if (command.equals("searchlib")) {
+            // Check that there are enough args
             if (args.length < 4) {
                 this.unknownCommand();
             } else {
+                // Get the args
                 String cat = args[1].toLowerCase();
                 String attr = args[2].toLowerCase();
                 String query = "";
 
+                // Reassemble the query
                 for (int i = 3; i < args.length; i++) {
                     query += args[i];
 
@@ -134,6 +169,7 @@ public class DefaultMode extends Mode {
                 if (cat.equals("artist")) {
                     boolean correctAttr = true;
 
+                    // Set the search strategy
                     if (attr.equals("name")) {
                         commandLineInterface.setLibSearchStrategy(new com.swen262.librarySearches.SearchArtistByName());
                     } else if (attr.equals("rating")) {
@@ -145,14 +181,17 @@ public class DefaultMode extends Mode {
                     }
 
                     if (correctAttr) {
+                        // Perform the search
                         LinkedList<Artist> results = commandLineInterface.searchLibrary(query);
                         printArtistResults(results);
                     } else {
+                        // Invalid search attribute
                         commandLineInterface.outputMessage("Error: Songs can only be searched by name, rating, or type");
                     }
                 } else if (cat.equals("release")) {
                     boolean correctAttr = true;
 
+                    // Set the search strategy
                     if (attr.equals("artistguid")) {
                         commandLineInterface.setLibSearchStrategy(new com.swen262.librarySearches.SearchReleaseByArtistGUID());
                     } else if (attr.equals("artistname")) {
@@ -174,14 +213,17 @@ public class DefaultMode extends Mode {
                     }
 
                     if (correctAttr) {
+                        // Perform the search
                         LinkedList<Release> results = commandLineInterface.searchLibrary(query);
                         printReleaseResults(results);
                     } else {
+                        // Invalid search attribute
                         commandLineInterface.outputMessage("Error: Releases can only be searched by artistGUID, artistName, maxDuration, minDuration, rating, title, trackGUID, or trackName");
                     }
                 } else if (cat.equals("song")) {
                     boolean correctAttr = true;
 
+                    // Set the search strategy
                     if (attr.equals("artistguid")) {
                         commandLineInterface.setLibSearchStrategy(new SearchSongByArtistGUID());
                     } else if (attr.equals("artistname")) {
@@ -203,12 +245,15 @@ public class DefaultMode extends Mode {
                     }
 
                     if (correctAttr) {
+                        // Perform the search
                         LinkedList<Song> results = commandLineInterface.searchLibrary(query);
                         printSongResults(results);
                     } else {
+                        // Invalid search attribute
                         commandLineInterface.outputMessage("Error: Songs can only be searched by artistGUID, artistName, maxDuration, minDuration, rating, releaseGUID, releaseTitle, or title");
                     }
                 } else {
+                    // Invalid search type
                     commandLineInterface.outputMessage("Error: Only artists, releases and songs can be searched for.");
                 }
             }
@@ -216,10 +261,12 @@ public class DefaultMode extends Mode {
             if (args.length < 4) {
                 this.unknownCommand();
             } else {
+                // Get the args
                 String cat = args[1].toLowerCase();
                 String attr = args[2].toLowerCase();
                 String query = "";
 
+                // Reassemble the query
                 for (int i = 3; i < args.length; i++) {
                     query += args[i];
 
@@ -239,6 +286,7 @@ public class DefaultMode extends Mode {
                 } else if (cat.equals("release")) {
                     boolean correctAttr = true;
 
+                    // Set the search strategy
                     if (attr.equals("artistguid")) {
                         commandLineInterface.setDBSearchStrategy(new SearchReleaseByArtistGUID());
                     } else if (attr.equals("artistname")) {
@@ -256,14 +304,17 @@ public class DefaultMode extends Mode {
                     }
 
                     if (correctAttr) {
+                        // Perform the search
                         LinkedList<Release> results = commandLineInterface.searchDatabase(query);
                         printReleaseResults(results);
                     } else {
+                        // Invalid search attribute
                         commandLineInterface.outputMessage("Error: Releases can only be searched by artistGUID, artistName, dateRange, title, trackGUID, or trackName");
                     }
                 } else if (cat.equals("song")) {
                     boolean correctAttr = true;
 
+                    // Set the search strategy
                     if (attr.equals("artist")) {
                         commandLineInterface.setDBSearchStrategy(new SearchSongByArtist());
                     } else if (attr.equals("duration")) {
@@ -275,16 +326,20 @@ public class DefaultMode extends Mode {
                     }
 
                     if (correctAttr) {
+                        // Perform the search
                         LinkedList<Song> results = commandLineInterface.searchDatabase(query);
                         printSongResults(results);
                     } else {
+                        // Invalid search attribute
                         commandLineInterface.outputMessage("Error: Songs can only be searched by artist, duration, or title");
                     }
                 } else {
+                    // Invalid search type
                     commandLineInterface.outputMessage("Error: Only artists, releases and songs can be searched for.");
                 }
             }
         } else if (command.equals("add")) {
+            // Make sure there are enough args
             if (args.length < 2) {
                 this.unknownCommand();
             } else {
@@ -292,14 +347,18 @@ public class DefaultMode extends Mode {
                     String GUID = args[1];
                     LocalDate date;
 
+                    // Check if a date was provided
                     if (args.length >= 3) {
+                        // Parse the date
                         String dateStr = args[2];
                         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM-dd-yyyy", Locale.ENGLISH);
                         date = LocalDate.parse(dateStr, formatter);
                     } else {
+                        // Set the date to the current time
                         date = LocalDate.now();
                     }
 
+                    // Add the song
                     commandLineInterface.addByGUID(GUID, date);
 
                     int numSongs = library.getSongCount();
@@ -324,15 +383,18 @@ public class DefaultMode extends Mode {
             }
         } else if (command.equals("rate")) {
             try {
+                // Check that there are enough args
                 if (args.length < 3) {
                     this.unknownCommand();
                 } else {
                     String GUID = args[1];
                     int rating = Integer.parseInt(args[2]);
 
+                    // Check that the reating is within range
                     if (rating > 5 || rating < 1) {
                         commandLineInterface.outputMessage("Ratings must be between 1 and 5.");
                     } else {
+                        // Rate the song or release
                         commandLineInterface.rateByGUID(GUID, rating);
                         commandLineInterface.outputMessage("Successfully rated.");
                     }
@@ -344,17 +406,20 @@ public class DefaultMode extends Mode {
             }
         } else if (command.equals("save")) {
             try {
+                // Save the library
                 commandLineInterface.saveLibrary();
             } catch (Exception e) {
                 commandLineInterface.outputMessage("Something went wrong.");
             }
         } else if (command.equals("browse")) {
+            // Move to the choosing artist page
             commandLineInterface.setMode(new ChoosingArtist(commandLineInterface));
         } else if (command.equals("quit")) {
             commandLineInterface.quit();
         } else if (command.equals("help")) {
             listCommands();
         } else {
+            // Unknown command
             this.unknownCommand();
         }
     }
