@@ -35,6 +35,8 @@ public class DefaultMode extends Mode {
                 "remove [guid]",
                 "   Removes from your personal library.",
                 "   [guid]: The GUID of a song or release you want to remove.",
+                "save",
+                "   Saves library in it's current state.",
                 "browse",
                 "   Enters into browsing mode. Displays your personal library.",
                 "quit",
@@ -71,6 +73,7 @@ public class DefaultMode extends Mode {
                 } catch (GUIDNotFoundException e) {
                     commandLineInterface.outputMessage("Error adding to library. Could not find song or release with matching GUID.");
                 } catch (Exception e) {
+                    e.printStackTrace();
                     commandLineInterface.outputMessage("Something went wrong.");
                 }
             }
@@ -85,7 +88,13 @@ public class DefaultMode extends Mode {
             } catch (Exception e) {
                 commandLineInterface.outputMessage("Something went wrong.");
             }
-        } else if (command.equals("browse")) {
+        } else if (command.equals("save")){
+            try {
+                commandLineInterface.saveLibrary();
+            } catch (Exception e) {
+                commandLineInterface.outputMessage("Something went wrong.");
+            }
+        }else if (command.equals("browse")) {
             commandLineInterface.setMode(new ChoosingArtist(commandLineInterface));
         } else if (command.equals("quit")) {
             commandLineInterface.quit();

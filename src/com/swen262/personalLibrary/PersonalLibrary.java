@@ -19,16 +19,17 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class PersonalLibrary {
-    private static LinkedList<Artist> artists;
+    private static HashSet<Artist> artists;
     private static LinkedList<Song> songs;
     private static LinkedList<Release> releases;
     private static HashMap<Song, Release> songsToRelease;
 
     private static PersonalLibrary activeInstance;
 
-    public PersonalLibrary(LinkedList<Song> songs, LinkedList<Release> releases){
+    public PersonalLibrary(LinkedList<Song> songs, LinkedList<Release> releases, HashSet<Artist> artists){
         activeInstance = this;
         this.songs = songs;
+        this.artists = artists;
         this.releases = releases;
         songsToRelease = new HashMap<>();
     }
@@ -40,20 +41,25 @@ public class PersonalLibrary {
                 File artistCSV = new File("src/com/swen262/personalLibrary/data/artists.csv");
                 File songCSV = new File("src/com/swen262/personalLibrary/data/songs.csv");
                 File releaseCSV = new File("src/com/swen262/personalLibrary/data/releases.csv");
+                songs = new LinkedList<>();
+                releases = new LinkedList<>();
+                songsToRelease = new HashMap<>();
+                artists = new HashSet<>();
                 if (songCSV.createNewFile() && releaseCSV.createNewFile() && artistCSV.createNewFile()) {
                     // create new release and songVs
-                    return new PersonalLibrary();
+                    return new PersonalLibrary(songs,releases,artists);
                 } else {
                     RFC4180Parser rfcDoubleParse = new RFC4180ParserBuilder().withQuoteChar('\"').build();
 
                     //artists
-                    artists = new LinkedList<Artist>();
+
                     CSVReader artist_csv_reader = new CSVReaderBuilder(new FileReader(artistCSV)).withCSVParser(rfcDoubleParse).build();
                     String[] artist_csv_record;
 
                     while ((artist_csv_record = artist_csv_reader.readNext()) != null){
                         Artist curArtist = artistParser(artist_csv_record);
                         artists.add(curArtist);
+                        //System.out.println(curArtist.getName());
                     }
 
                     //songs
@@ -63,6 +69,7 @@ public class PersonalLibrary {
                         Song curSong = songParser(song_csv_record);
                         songs.add(curSong);
                         songsToRelease.put(curSong, null);
+                        //System.out.println(curSong.getTitle());
                     }
 
                     CSVReader release_csv_reader = new CSVReaderBuilder(new FileReader(releaseCSV)).withCSVParser(rfcDoubleParse).build();
@@ -71,8 +78,7 @@ public class PersonalLibrary {
                         Release curRelease = releaseParser(release_csv_record);
                         releases.add(curRelease);
                     }
-
-                    return new PersonalLibrary(songs,releases);
+                    return new PersonalLibrary(songs,releases,artists);
                 }
             } catch (IOException | CsvValidationException e){
                e.printStackTrace();
@@ -84,10 +90,15 @@ public class PersonalLibrary {
     }
 
     private static Artist artistParser(String[] artist_attributes){
-        String guid = artist_attributes[0];
-        String name = artist_attributes[1];
-        String type = artist_attributes[2];
-        return new Artist(guid,name,type);
+        String guid = artist_attributes[3];
+        String name = artist_attributes[0];
+        String rtstr = artist_attributes[2];
+        int rating = 0;
+        if (rtstr.length() > 0){
+            rating = Integer.parseInt(rtstr);
+        }
+        String type = artist_attributes[1];
+        return new Artist(name,type,rating,guid);
     }
 
     public static Artist searchArtistByGUID(String GUID){
@@ -101,12 +112,13 @@ public class PersonalLibrary {
 
     private static Song songParser(String[] song_attributes){
 
-        String song_guid = song_attributes[0];
+        String title = song_attributes[0];
         String artist_guid = song_attributes[1];
         Artist artist = searchArtistByGUID(artist_guid);
         int duration = Integer.parseInt(song_attributes[2]);
-        String title = song_attributes[3];
-        return new Song(title,artist,duration,song_guid);
+        int rating = Integer.parseInt(song_attributes[3]);
+        String song_guid = song_attributes[4];
+        return new Song(title,artist,duration,rating,song_guid);
     }
 
     private static Song searchSongByGUID(String GUID){
@@ -120,13 +132,14 @@ public class PersonalLibrary {
 
     private static Release releaseParser(String[] release_attributes){
         int length = release_attributes.length;
-        String release_guid = release_attributes[0];
-        String artist_guid = release_attributes[1];
+        String issue_date = release_attributes[0];
+        String title = release_attributes[1];
+        String artist_guid = release_attributes[2];
         Artist artist = searchArtistByGUID(artist_guid);
-        String title = release_attributes[2];
-        String issue_date = release_attributes[4];
-        //System.out.println("Original issue date: "+issue_date);
         String medium = release_attributes[3];
+        String release_guid = release_attributes[4];
+        //System.out.println("Original issue date: "+issue_date);
+
         if (issue_date.matches("^\\d\\d\\d\\d$")){
             issue_date += "-01-01";
         }
@@ -154,13 +167,13 @@ public class PersonalLibrary {
             return release;
         } catch (ParseException e){
             System.out.println("ohno error");
-            e.getMessage();
+            e.printStackTrace();
         }
         return null;
     }
 
     public PersonalLibrary(){
-        this(new LinkedList<>(), new LinkedList<>());
+        this(new LinkedList<>(), new LinkedList<>(),new HashSet<>());
     }
 
     public LinkedList<Song> getSongs(){
@@ -171,9 +184,11 @@ public class PersonalLibrary {
         return this.releases;
     }
 
+
     public HashSet<Artist> getArtists(){
         HashSet<Artist> artists = new HashSet<>();
         for (Song song : songs) {
+            //System.out.println(song.getArtist().getName());
             artists.add(song.getArtist());
         }
         for (Release release : releases) {
