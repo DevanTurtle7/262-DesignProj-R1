@@ -3,8 +3,8 @@ package com.swen262.DBSearches;
 import java.util.LinkedList;
 
 import com.swen262.database.Database;
-import com.swen262.Release;
-import com.swen262.Song;
+import com.swen262.model.Release;
+import com.swen262.model.Song;
 
 public class SearchReleaseByTrackGUID implements DBSongSearcher<Release> {
 

@@ -3,7 +3,7 @@ package com.swen262.librarySearches;
 import java.util.Collections;
 import java.util.LinkedList;
 
-import com.swen262.Artist;
+import com.swen262.model.Artist;
 import com.swen262.personalLibrary.PersonalLibrary;
 
 public class SearchArtistByType implements LibrarySongSearcher<Artist>{

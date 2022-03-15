@@ -1,13 +1,12 @@
 package com.swen262.commandLine;
 
-import com.swen262.Artist;
-import com.swen262.Release;
-import com.swen262.Song;
+import com.swen262.model.Artist;
+import com.swen262.model.Release;
+import com.swen262.model.Song;
 import com.swen262.personalLibrary.PersonalLibrary;
 import com.swen262.util.Formatter;
 
 import java.util.HashSet;
-import java.util.Locale;
 
 public class BrowsingArtist extends Mode {
     private PersonalLibrary library;

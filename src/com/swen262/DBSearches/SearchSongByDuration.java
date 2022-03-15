@@ -4,7 +4,7 @@ import java.util.LinkedHashSet;
 import java.util.LinkedList;
 
 import com.swen262.database.Database;
-import com.swen262.Song;
+import com.swen262.model.Song;
 
 public class SearchSongByDuration implements DBSongSearcher<Song>{
 

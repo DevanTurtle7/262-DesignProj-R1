@@ -3,8 +3,8 @@ package com.swen262.librarySearches;
 import java.util.Collections;
 import java.util.LinkedList;
 
-import com.swen262.Release;
-import com.swen262.Song;
+import com.swen262.model.Release;
+import com.swen262.model.Song;
 import com.swen262.personalLibrary.PersonalLibrary;
 
 public class SearchReleaseByTrackName implements LibrarySongSearcher<Release>{

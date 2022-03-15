@@ -1,6 +1,6 @@
 package com.swen262.personalLibrary;
 
-import com.swen262.Release;
+import com.swen262.model.Release;
 
 public class RemoveRelease implements Action{
     private PersonalLibrary library;

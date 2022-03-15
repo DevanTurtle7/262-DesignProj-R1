@@ -4,10 +4,9 @@ import com.opencsv.CSVReader;
 import com.opencsv.CSVReaderBuilder;
 import com.opencsv.RFC4180Parser;
 import com.opencsv.RFC4180ParserBuilder;
-import com.swen262.Artist;
-import com.swen262.Release;
-import com.swen262.Song;
-import jdk.jfr.DataAmount;
+import com.swen262.model.Artist;
+import com.swen262.model.Release;
+import com.swen262.model.Song;
 
 import java.io.FileReader;
 import java.text.ParseException;

@@ -2,7 +2,7 @@ package com.swen262.DBSearches;
 
 import java.util.LinkedList;
 
-import com.swen262.Artist;
+import com.swen262.model.Artist;
 import com.swen262.database.Database;
 
 public class SearchArtistByName implements DBSongSearcher<Artist>{

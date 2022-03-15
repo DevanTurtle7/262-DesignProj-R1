@@ -1,12 +1,10 @@
 package com.swen262.personalLibrary;
 
-import com.swen262.Artist;
-import com.swen262.Main;
-import com.swen262.Release;
-import com.swen262.Song;
+import com.swen262.model.Artist;
+import com.swen262.model.Release;
+import com.swen262.model.Song;
 import com.swen262.database.Database;
 
-import javax.xml.crypto.Data;
 import java.util.HashSet;
 import java.util.LinkedList;
 

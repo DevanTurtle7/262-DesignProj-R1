@@ -1,4 +1,4 @@
-package com.swen262;
+package com.swen262.model;
 
 public class Artist implements Comparable<Artist>{
     private String GUID;

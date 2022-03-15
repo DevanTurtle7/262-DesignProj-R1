@@ -1,4 +1,4 @@
-package com.swen262;
+package com.swen262.model;
 
 public class Song implements Comparable<Song>{
     private String title;

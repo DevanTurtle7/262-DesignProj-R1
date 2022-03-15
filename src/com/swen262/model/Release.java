@@ -1,7 +1,6 @@
-package com.swen262;
+package com.swen262.model;
 
 import java.util.Date;
-import java.util.LinkedHashSet;
 import java.util.LinkedList;
 
 public class Release implements Comparable<Release>{

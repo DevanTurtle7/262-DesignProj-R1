@@ -3,7 +3,7 @@ package com.swen262.DBSearches;
 import java.util.LinkedList;
 
 import com.swen262.database.Database;
-import com.swen262.Release;
+import com.swen262.model.Release;
 
 public class SearchReleaseByArtistName implements DBSongSearcher<Release>{
 

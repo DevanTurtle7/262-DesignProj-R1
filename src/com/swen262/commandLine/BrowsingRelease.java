@@ -1,7 +1,7 @@
 package com.swen262.commandLine;
 
-import com.swen262.Release;
-import com.swen262.Song;
+import com.swen262.model.Release;
+import com.swen262.model.Song;
 import com.swen262.util.Formatter;
 
 import java.util.LinkedList;

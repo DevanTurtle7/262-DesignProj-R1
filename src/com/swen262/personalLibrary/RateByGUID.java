@@ -1,7 +1,6 @@
 package com.swen262.personalLibrary;
 
-import com.swen262.Release;
-import com.swen262.Song;
+import com.swen262.model.Song;
 import com.swen262.database.Database;
 import com.swen262.exceptions.GUIDNotFoundException;
 

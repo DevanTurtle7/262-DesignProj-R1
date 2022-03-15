@@ -6,7 +6,7 @@ import java.util.Date;
 import java.util.LinkedList;
 
 import com.swen262.database.Database;
-import com.swen262.Release;
+import com.swen262.model.Release;
 
 public class SearchReleaseByDateRange implements DBSongSearcher<Release>{
 

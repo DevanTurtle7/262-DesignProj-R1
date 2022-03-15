@@ -1,6 +1,6 @@
 package com.swen262.commandLine;
 
-import com.swen262.Artist;
+import com.swen262.model.Artist;
 import com.swen262.DBSearches.*;
 import com.swen262.DBSearches.SearchArtistByName;
 import com.swen262.DBSearches.SearchReleaseByArtistGUID;
@@ -8,14 +8,13 @@ import com.swen262.DBSearches.SearchReleaseByTitle;
 import com.swen262.DBSearches.SearchReleaseByTrackGUID;
 import com.swen262.DBSearches.SearchReleaseByTrackName;
 import com.swen262.DBSearches.SearchSongByTitle;
-import com.swen262.Release;
-import com.swen262.Song;
+import com.swen262.model.Release;
+import com.swen262.model.Song;
 import com.swen262.exceptions.GUIDNotFoundException;
 import com.swen262.librarySearches.*;
 import com.swen262.personalLibrary.PersonalLibrary;
 
 import java.util.LinkedList;
-import java.util.Locale;
 
 public class DefaultMode extends Mode {
 

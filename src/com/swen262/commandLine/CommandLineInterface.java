@@ -1,7 +1,6 @@
 package com.swen262.commandLine;
 
 import com.swen262.DBSearches.DBSongSearcher;
-import com.swen262.Song;
 import com.swen262.librarySearches.LibrarySongSearcher;
 import com.swen262.personalLibrary.*;
 
