@@ -6,7 +6,7 @@ import com.swen262.model.Song;
 
 import java.util.LinkedList;
 
-public class SearchReleaseByTrackGUID implements DBSongSearcher<Release> {
+public class SearchReleaseByTrackGUID implements DBSearcher<Release> {
 
     @Override
     public LinkedList<Release> algorithm(String query) {

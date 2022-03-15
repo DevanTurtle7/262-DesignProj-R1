@@ -7,7 +7,7 @@ import com.swen262.model.Song;
 import java.util.LinkedHashSet;
 import java.util.LinkedList;
 
-public class SearchSongByDuration implements DBSongSearcher<Song> {
+public class SearchSongByDuration implements DBSearcher<Song> {
 
 
     @Override

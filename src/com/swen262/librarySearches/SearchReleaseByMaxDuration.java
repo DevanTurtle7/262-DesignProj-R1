@@ -6,7 +6,7 @@ import com.swen262.personalLibrary.PersonalLibrary;
 import java.util.Collections;
 import java.util.LinkedList;
 
-public class SearchReleaseByMaxDuration implements LibrarySongSearcher<Release> {
+public class SearchReleaseByMaxDuration implements LibrarySearcher<Release> {
 
     @Override
     public LinkedList<Release> algorithm(String query) {

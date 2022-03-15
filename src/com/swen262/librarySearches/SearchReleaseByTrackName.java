@@ -7,7 +7,7 @@ import com.swen262.personalLibrary.PersonalLibrary;
 import java.util.Collections;
 import java.util.LinkedList;
 
-public class SearchReleaseByTrackName implements LibrarySongSearcher<Release> {
+public class SearchReleaseByTrackName implements LibrarySearcher<Release> {
 
     @Override
     public LinkedList<Release> algorithm(String query) {

@@ -6,7 +6,7 @@ import com.swen262.personalLibrary.PersonalLibrary;
 import java.util.Collections;
 import java.util.LinkedList;
 
-public class SearchArtistByType implements LibrarySongSearcher<Artist> {
+public class SearchArtistByType implements LibrarySearcher<Artist> {
 
     @Override
     public LinkedList<Artist> algorithm(String query) {

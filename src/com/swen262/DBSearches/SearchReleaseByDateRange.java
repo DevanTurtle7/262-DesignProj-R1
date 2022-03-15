@@ -8,7 +8,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.LinkedList;
 
-public class SearchReleaseByDateRange implements DBSongSearcher<Release> {
+public class SearchReleaseByDateRange implements DBSearcher<Release> {
 
     @Override
     public LinkedList<Release> algorithm(String query) {

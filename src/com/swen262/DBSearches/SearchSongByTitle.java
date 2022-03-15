@@ -5,7 +5,7 @@ import com.swen262.model.Song;
 
 import java.util.LinkedList;
 
-public class SearchSongByTitle implements DBSongSearcher<Song> {
+public class SearchSongByTitle implements DBSearcher<Song> {
 
     @Override
     public LinkedList<Song> algorithm(String query) {
